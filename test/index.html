@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>萝卜白菜系统重构｜项目汇报</title>
+  <style>
+    :root {
+      --ink: #10243d;
+      --muted: #63748a;
+      --line: #dbe5ef;
+      --paper: #f5f8fc;
+      --blue: #1668dc;
+      --cyan: #18a8c8;
+      --green: #21a673;
+      --amber: #ee9a28;
+      --navy: #0b1f3a;
+    }
+    * { box-sizing: border-box; }
+    html, body { width: 100%; height: 100%; margin: 0; overflow: hidden; }
+    body {
+      color: var(--ink); background: #e9f0f7;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+    .deck { height: 100%; position: relative; }
+    .slide {
+      position: absolute; inset: 0; margin: auto; width: min(100vw, 177.778vh); height: min(56.25vw, 100vh);
+      min-height: 500px; padding: clamp(28px, 4vw, 72px) clamp(36px, 6vw, 108px) clamp(24px, 3.7vw, 64px);
+      background: var(--paper); overflow: hidden; opacity: 0; pointer-events: none;
+      transform: translateX(24px); transition: opacity .35s ease, transform .35s ease;
+    }
+    .slide.active { opacity: 1; pointer-events: auto; transform: translateX(0); }
+    .slide::before { content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 8px; background: linear-gradient(90deg, var(--blue), var(--cyan)); }
+    .slide::after { content: ""; position: absolute; width: 45%; height: 80%; right: -19%; top: 11%; border: 1px solid #dbe8f4; border-radius: 50%; opacity: .75; }
+    .page-no { position: absolute; bottom: clamp(22px, 2.5vw, 44px); right: clamp(36px, 6vw, 108px); color: #7890a7; font-size: 13px; letter-spacing: .12em; font-weight: 700; }
+    .kicker { display: flex; align-items: center; gap: 10px; color: var(--blue); font-size: clamp(12px, 1vw, 16px); font-weight: 700; letter-spacing: .13em; }
+    .kicker i { display: inline-block; width: 26px; height: 2px; background: var(--blue); }
+    h1 { margin: 12px 0 8px; font-size: clamp(30px, 3.1vw, 54px); line-height: 1.1; letter-spacing: -.045em; }
+    .lede { margin: 0; max-width: 900px; color: var(--muted); font-size: clamp(14px, 1.25vw, 21px); line-height: 1.6; }
+    .cards { position: relative; z-index: 1; display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(14px, 1.5vw, 28px); margin-top: clamp(28px, 4vw, 64px); }
+    .card { min-height: clamp(290px, 25vw, 420px); position: relative; padding: clamp(20px, 2.1vw, 38px); background: rgba(255,255,255,.96); border: 1px solid var(--line); border-radius: 16px; box-shadow: 0 16px 38px rgba(26, 61, 96, .08); overflow: visible; }
+    .card:not(:last-child)::after { content: ""; position: absolute; width: clamp(18px, 2vw, 32px); height: 2px; top: 50%; right: clamp(-30px, -2.1vw, -18px); background: #a9bed1; z-index: 3; }
+    .card:not(:last-child)::before { content: ""; position: absolute; right: clamp(-30px, -2.1vw, -18px); top: calc(50% - 4px); border-left: 7px solid #a9bed1; border-top: 5px solid transparent; border-bottom: 5px solid transparent; z-index: 3; }
+    .num { color: #a8bacb; font-size: clamp(31px, 3.3vw, 56px); line-height: 1; font-weight: 800; letter-spacing: -.08em; }
+    .card h2 { margin: 17px 0 10px; font-size: clamp(20px, 1.85vw, 31px); letter-spacing: -.04em; line-height: 1.16; }
+    .tagline { min-height: 28px; margin: 0 0 17px; color: var(--blue); font-weight: 750; font-size: clamp(14px, 1.18vw, 19px); }
+    .card p { margin: 0; color: #53677c; font-size: clamp(12px, 1.05vw, 17px); line-height: 1.7; }
+    .chips { position: absolute; left: clamp(20px, 2.1vw, 38px); right: clamp(20px, 2.1vw, 38px); bottom: clamp(19px, 2vw, 35px); display: flex; flex-wrap: wrap; gap: 7px; }
+    .chip { padding: 6px 9px; background: #edf5ff; border-radius: 5px; color: #2360a7; font-size: clamp(10px, .84vw, 13px); font-weight: 700; white-space: nowrap; }
+    .chip.green { background: #e9f8f1; color: #17825b; } .chip.amber { background: #fff4e3; color: #b76d11; }
+    .footnote { position: absolute; z-index: 2; left: clamp(36px, 6vw, 108px); bottom: clamp(24px, 2.5vw, 44px); max-width: calc(100% - 300px); color: #42617d; font-size: clamp(12px, 1vw, 16px); font-weight: 650; }
+    .footnote strong { color: var(--ink); }
+    .plan .cards { margin-top: clamp(25px, 3.5vw, 53px); }
+    .plan .card { min-height: clamp(304px, 26.8vw, 450px); }
+    .plan .card h2 { margin-top: 12px; }
+    .focus { display: block; margin: 0 0 15px; color: var(--blue); font-size: clamp(15px, 1.32vw, 21px); font-weight: 800; line-height: 1.25; }
+    .points { margin: 0; padding: 0; list-style: none; }
+    .points li { position: relative; padding: 0 0 9px 14px; color: #53677c; font-size: clamp(11px, .93vw, 15px); line-height: 1.45; }
+    .points li::before { content: ""; position: absolute; left: 0; top: .58em; width: 5px; height: 5px; border-radius: 50%; background: var(--cyan); }
+    .points b { color: #29435c; }
+    .flow { position: absolute; left: clamp(20px, 2.1vw, 38px); right: clamp(20px, 2.1vw, 38px); bottom: clamp(20px, 2vw, 36px); display: flex; align-items: center; gap: 7px; color: #295176; font-weight: 750; font-size: clamp(10px, .82vw, 13px); }
+    .flow span { padding: 7px 8px; border: 1px solid #d8e5f0; border-radius: 5px; background: #f9fcff; text-align: center; flex: 1; } .flow em { color: #5f89ae; font-style: normal; }
+    .controls { position: fixed; z-index: 5; left: 50%; bottom: 18px; transform: translateX(-50%); display: flex; gap: 8px; align-items: center; padding: 7px; border-radius: 10px; background: rgba(11,31,58,.87); box-shadow: 0 8px 28px rgba(0,0,0,.16); }
+    .controls button { appearance: none; border: 0; cursor: pointer; border-radius: 6px; padding: 7px 12px; background: transparent; color: #fff; font: inherit; font-size: 12px; } .controls button:hover { background: rgba(255,255,255,.14); } .counter { min-width: 34px; text-align: center; color: #a9c3df; font-size: 12px; }
+    @media (max-width: 760px), (max-height: 560px) { .slide { min-height: 0; } .cards { gap: 10px; margin-top: 20px; } .card { min-height: 0; padding: 17px; } .card h2 { margin: 8px 0 5px; } .tagline { min-height: 0; margin-bottom: 7px; } .chips, .flow { position: static; margin-top: 10px; } .card:not(:last-child)::after, .card:not(:last-child)::before { display: none; } .footnote { display: none; } }
+    @media print { @page { size: 16in 9in; margin: 0; } html, body { overflow: visible; background: white; } .deck { height: auto; } .slide { position: relative; display: block; width: 16in; height: 9in; min-height: 0; opacity: 1; transform: none; page-break-after: always; break-after: page; } .controls { display: none; } }
+  </style>
+</head>
+<body>
+  <main class="deck" aria-label="萝卜白菜系统重构项目汇报">
+    <section class="slide active" aria-label="第 1 页：阶段性成果">
+      <div class="kicker"><i></i> 萝卜白菜系统重构</div>
+      <h1>阶段性成果</h1>
+      <p class="lede">从基础架构升级，到经营能力优化，再到会员基础能力建设，持续推进核心系统重构。</p>
+      <div class="cards">
+        <article class="card"><div class="num">01</div><h2>小程序原生化</h2><p class="tagline">H5 → 原生小程序</p><p>完成小程序整体原生化升级，为后续业务能力持续迭代提供稳定的基础支撑。</p><div class="chips"><span class="chip">原生化升级</span><span class="chip">体验优化</span><span class="chip">基础夯实</span></div></article>
+        <article class="card"><div class="num">02</div><h2>店铺装修能力重构</h2><p class="tagline">能配置 → 好配置、易管理</p><p>针对配置繁琐、管理不便、运营效率较低等问题，优化装修配置与管理体验，提升运营效率与经营灵活性。</p><div class="chips"><span class="chip green">配置效率 ↑</span><span class="chip green">管理体验 ↑</span><span class="chip green">运营灵活性 ↑</span></div></article>
+        <article class="card"><div class="num">03</div><h2>会员基础能力重构</h2><p class="tagline">进行中｜统一、分层、标准化</p><p>统一会员基础信息及管理入口，支持按业务运营需求进行会员分组，建立会员标签能力，逐步形成标准化的会员基础管理体系，为后续精细化运营提供基础。</p><div class="chips"><span class="chip amber">统一管理</span><span class="chip amber">会员分组</span><span class="chip amber">会员标签</span></div></article>
+      </div>
+      <p class="footnote"><strong>阶段结论：</strong>已完成小程序基础架构及经营配置能力升级，当前持续推进会员基础能力重构。</p><span class="page-no">01 / 02</span>
+    </section>
+    <section class="slide plan" aria-label="第 2 页：后续建设规划">
+      <div class="kicker"><i></i> 萝卜白菜系统重构</div>
+      <h1>后续建设规划</h1>
+      <p class="lede">下一阶段聚焦商品、营销、订单三大核心业务域，进一步提升系统的统一性、灵活性与业务协同能力。</p>
+      <div class="cards">
+        <article class="card"><div class="num">01</div><h2>商品重构</h2><span class="focus">统一管理 × 灵活经营</span><ul class="points"><li><b>PIM 商品中台对接</b>，实现商品基础信息统一管理</li><li><b>渠道商品个性化管理</b>，提升运营效率与经营灵活性</li><li>优化小程序商城商品信息及导购体验</li></ul><div class="chips"><span class="chip">统一管理</span><span class="chip">个性化经营</span><span class="chip">导购优化</span></div></article>
+        <article class="card"><div class="num">02</div><h2>营销重构</h2><span class="focus">通用复用 × 灵活组合</span><ul class="points"><li>重构积分商城、优惠券、促销活动</li><li>将核心内容抽象为<b>产品通用能力</b></li><li>提高系统灵活性，快速支撑新玩法</li></ul><div class="flow"><span>单一玩法</span><em>→</em><span>通用能力</span><em>+</em><span>灵活组合</span></div></article>
+        <article class="card"><div class="num">03</div><h2>订单重构</h2><span class="focus">正逆互联 × 三流合一</span><ul class="points"><li>实现正向与逆向交易单据互联</li><li>逐步打破订单、售后、物流、退款等环节的<b>信息孤岛</b></li><li>推进信息流、物流、资金流协同流转</li></ul><div class="chips"><span class="chip green">正逆交易互联</span><span class="chip green">三流合一</span><span class="chip green">协同流转</span></div></article>
+      </div>
+      <p class="footnote"><strong>建设方向：</strong>商品解决“统一与灵活”｜营销解决“复用与扩展”｜订单解决“打通与协同”。</p><span class="page-no">02 / 02</span>
+    </section>
+  </main>
+  <nav class="controls" aria-label="页面控制"><button type="button" id="prev" aria-label="上一页">← 上一页</button><span class="counter" id="counter">1 / 2</span><button type="button" id="next" aria-label="下一页">下一页 →</button><button type="button" id="print">打印 / PDF</button></nav>
+  <script>
+    const slides = [...document.querySelectorAll('.slide')]; let current = 0;
+    const render = () => { slides.forEach((s, i) => s.classList.toggle('active', i === current)); document.getElementById('counter').textContent = `${current + 1} / ${slides.length}`; };
+    const move = d => { current = (current + d + slides.length) % slides.length; render(); };
+    document.getElementById('prev').onclick = () => move(-1); document.getElementById('next').onclick = () => move(1); document.getElementById('print').onclick = () => window.print();
+    document.addEventListener('keydown', e => { if (['ArrowRight', 'PageDown', ' '].includes(e.key)) { e.preventDefault(); move(1); } if (['ArrowLeft', 'PageUp'].includes(e.key)) { e.preventDefault(); move(-1); } if (e.key.toLowerCase() === 'p') window.print(); });
+    document.querySelector('.deck').addEventListener('click', e => { if (e.target.closest('button')) return; move(1); });
+  </script>
+</body>
+</html>
