@@ -1,0 +1,2367 @@
+<!doctype html>
+<html lang="zh-CN">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1">
+		<title>全渠道会员运营规划｜按大纲汇报版</title>
+		<style>
+			:root {
+				--ink: #143c30;
+				--green: #14734d;
+				--green2: #35a66f;
+				--mint: #e6f4eb;
+				--lime: #def35a;
+				--orange: #ff7c42;
+				--yellow: #fff3c0;
+				--paper: #f3f6ef;
+				--white: #fff;
+				--line: #dce7df;
+				--sub: #5e746c;
+				--shadow: 0 15px 42px rgba(23, 63, 50, .09)
+			}
+
+			* {
+				box-sizing: border-box
+			}
+
+			html {
+				scroll-behavior: smooth;
+				scroll-snap-type: y mandatory
+			}
+
+			body {
+				margin: 0;
+				background: #dce4dc;
+				color: var(--ink);
+				font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif
+			}
+
+			.slide {
+				width: 100vw;
+				height: 100vh;
+				min-height: 720px;
+				scroll-snap-align: start;
+				background: var(--paper);
+				padding: 70px 6vw 54px;
+				position: relative;
+				overflow: hidden;
+				display: flex;
+				flex-direction: column;
+				justify-content: center
+			}
+
+			.slide.white {
+				background: #fff
+			}
+
+			.slide.dark {
+				background: var(--ink);
+				color: white
+			}
+
+			.slide:after {
+				content: attr(data-page);
+				position: absolute;
+				right: 35px;
+				bottom: 22px;
+				font-size: 12px;
+				font-weight: 900;
+				letter-spacing: .12em;
+				color: #91a59d
+			}
+
+			.top {
+				position: absolute;
+				left: 6vw;
+				right: 6vw;
+				top: 26px;
+				display: flex;
+				justify-content: space-between;
+				font-size: 11px;
+				font-weight: 900;
+				letter-spacing: .1em;
+				color: var(--green)
+			}
+
+			.dark .top {
+				color: #abd2bf
+			}
+
+			.title {
+				font-size: clamp(36px, 4.2vw, 60px);
+				line-height: 1.1;
+				letter-spacing: -.045em;
+				margin: 0 0 10px;
+				font-weight: 900
+			}
+
+			.sub {
+				font-size: clamp(15px, 1.45vw, 21px);
+				color: var(--sub);
+				margin: 0 0 26px
+			}
+
+			.dark .sub {
+				color: #bdd1c8
+			}
+
+			.accent {
+				color: var(--green)
+			}
+
+			.dark .accent {
+				color: var(--lime)
+			}
+
+			.card {
+				background: white;
+				border: 1px solid var(--line);
+				border-radius: 22px;
+				padding: 22px;
+				box-shadow: var(--shadow)
+			}
+
+			.tag {
+				display: inline-block;
+				padding: 4px 9px;
+				border-radius: 99px;
+				background: var(--mint);
+				color: var(--green);
+				font-size: 11px;
+				font-weight: 900
+			}
+
+			.tag.o {
+				background: #ffe7db;
+				color: #a84820
+			}
+
+			.grid2 {
+				display: grid;
+				grid-template-columns: 1fr 1fr;
+				gap: 17px
+			}
+
+			.grid3 {
+				display: grid;
+				grid-template-columns: repeat(3, 1fr);
+				gap: 15px
+			}
+
+			.grid4 {
+				display: grid;
+				grid-template-columns: repeat(4, 1fr);
+				gap: 12px
+			}
+
+			.cover {
+				background: radial-gradient(circle at 85% 15%, #b8efd0 0, transparent 30%), radial-gradient(circle at 9% 90%, #fff0a2 0, transparent 28%), linear-gradient(135deg, #fafcf8, #eaf4ed)
+			}
+
+			.cover .badge {
+				width: max-content;
+				background: var(--ink);
+				color: white;
+				padding: 8px 13px;
+				border-radius: 99px;
+				font-size: 12px;
+				font-weight: 800
+			}
+
+			.cover h1 {
+				font-size: clamp(56px, 7vw, 96px);
+				line-height: 1.01;
+				margin: 25px 0 18px;
+				letter-spacing: -.06em
+			}
+
+			.cover p {
+				font-size: 25px;
+				color: var(--sub);
+				margin: 0
+			}
+
+			.cover .meta {
+				margin-top: 45px;
+				font-size: 13px;
+				font-weight: 800;
+				word-spacing: 22px
+			}
+
+			.cover .ring {
+				position: absolute;
+				width: 360px;
+				height: 360px;
+				border: 70px solid rgba(20, 115, 77, .08);
+				border-radius: 50%;
+				right: -110px;
+				bottom: -140px
+			}
+
+			.agenda {
+				display: grid;
+				grid-template-columns: repeat(5, 1fr);
+				gap: 12px
+			}
+
+			.agenda>div {
+				background: white;
+				border: 1px solid var(--line);
+				border-radius: 21px;
+				padding: 22px 18px;
+				min-height: 250px;
+				position: relative;
+				overflow: hidden
+			}
+
+			.agenda .n {
+				font-size: 50px;
+				font-weight: 900;
+				color: #c5ded1
+			}
+
+			.agenda h3 {
+				font-size: 18px;
+				margin: 14px 0 7px
+			}
+
+			.agenda p {
+				font-size: 12px;
+				color: var(--sub);
+				margin: 0
+			}
+
+			.agenda>div:after {
+				content: "";
+				position: absolute;
+				bottom: 0;
+				left: 0;
+				right: 0;
+				height: 6px;
+				background: var(--green)
+			}
+
+			.agenda>div:nth-child(2):after {
+				background: var(--orange)
+			}
+
+			.agenda>div:nth-child(3):after {
+				background: #e4bf3b
+			}
+
+			.agenda>div:nth-child(4):after {
+				background: #8a71cc
+			}
+
+			.agenda>div:nth-child(5):after {
+				background: #4a92bd
+			}
+
+			.statement {
+				font-size: clamp(37px, 5vw, 70px);
+				font-weight: 900;
+				line-height: 1.2;
+				letter-spacing: -.045em;
+				max-width: 1150px
+			}
+
+			.statement small {
+				display: block;
+				font-size: 14px;
+				color: var(--lime);
+				letter-spacing: .12em;
+				margin-bottom: 16px
+			}
+
+			.stages {
+				display: grid;
+				grid-template-columns: repeat(5, 1fr);
+				gap: 10px
+			}
+
+			.stage {
+				background: white;
+				border: 1px solid var(--line);
+				border-radius: 19px;
+				padding: 20px 15px;
+				min-height: 155px;
+				position: relative
+			}
+
+			.stage:not(:last-child):after {
+				content: "→";
+				position: absolute;
+				right: -15px;
+				top: 62px;
+				color: var(--orange);
+				font-size: 21px;
+				z-index: 2
+			}
+
+			.stage b {
+				display: block;
+				margin-top: 8px
+			}
+
+			.stage strong {
+				display: block;
+				font-size: 27px;
+				color: var(--orange);
+				margin: 4px 0
+			}
+
+			.stage small {
+				color: var(--sub)
+			}
+
+			.note {
+				margin-top: 15px;
+				background: var(--yellow);
+				border: 1px solid #edd987;
+				border-radius: 16px;
+				padding: 16px 19px;
+				font-size: 14px
+			}
+
+			.conclusions {
+				display: grid;
+				grid-template-columns: repeat(4, 1fr);
+				gap: 13px
+			}
+
+			.conclusion {
+				padding: 23px;
+				border-radius: 21px;
+				background: white;
+				border: 1px solid var(--line);
+				min-height: 250px
+			}
+
+			.conclusion .ci {
+				font-size: 35px
+			}
+
+			.conclusion h3 {
+				font-size: 19px;
+				margin: 10px 0 7px
+			}
+
+			.conclusion p {
+				font-size: 13px;
+				color: var(--sub);
+				margin: 0
+			}
+
+			.conclusion b {
+				display: block;
+				color: var(--green);
+				font-size: 12px;
+				margin-top: 16px
+			}
+
+			.swot {
+				padding: 28px;
+				border-radius: 24px;
+				min-height: 330px
+			}
+
+			.swot.good {
+				background: #e4f4ea
+			}
+
+			.swot.gap {
+				background: #fff0e7
+			}
+
+			.swot h3 {
+				font-size: 27px;
+				margin: 9px 0 15px
+			}
+
+			.swot ul {
+				padding-left: 20px;
+				margin: 0;
+				color: var(--sub);
+				font-size: 15px
+			}
+
+			.swot li+li {
+				margin-top: 12px
+			}
+
+			.choices {
+				display: grid;
+				grid-template-columns: repeat(3, 1fr);
+				gap: 15px
+			}
+
+			.choice {
+				padding: 27px;
+				border-radius: 22px;
+				background: rgba(255, 255, 255, .08);
+				border: 1px solid rgba(255, 255, 255, .14);
+				min-height: 270px
+			}
+
+			.choice .n {
+				font-size: 58px;
+				font-weight: 900;
+				color: var(--lime);
+				line-height: 1
+			}
+
+			.choice h3 {
+				font-size: 24px;
+				margin: 13px 0 8px
+			}
+
+			.choice p {
+				color: #c8d9d1;
+				font-size: 14px
+			}
+
+			.choice b {
+				display: block;
+				border-top: 1px solid rgba(255, 255, 255, .16);
+				padding-top: 13px;
+				margin-top: 22px;
+				color: var(--lime);
+				font-size: 12px
+			}
+
+			.eq {
+				padding: 23px;
+				border-radius: 23px;
+				background: linear-gradient(135deg, var(--green), #0d4b35);
+				color: white;
+				text-align: center;
+				font-size: 38px;
+				font-weight: 900
+			}
+
+			.branches {
+				display: grid;
+				grid-template-columns: 1fr 1fr;
+				gap: 18px;
+				margin-top: 32px
+			}
+
+			.branch {
+				background: white;
+				border: 1px solid var(--line);
+				border-top: 6px solid var(--orange);
+				border-radius: 22px;
+				padding: 24px
+			}
+
+			.branch.old {
+				border-top-color: var(--green2)
+			}
+
+			.branch h3 {
+				font-size: 23px;
+				margin: 0 0 10px
+			}
+
+			.formula {
+				font-size: 18px;
+				line-height: 1.6;
+				font-weight: 900
+			}
+
+			.formula em {
+				font-style: normal;
+				color: var(--orange)
+			}
+
+			.old .formula em {
+				color: var(--green)
+			}
+
+			.branch p {
+				color: var(--sub);
+				font-size: 13px
+			}
+
+			.funnel {
+				display: grid;
+				grid-template-columns: repeat(5, 1fr);
+				gap: 8px
+			}
+
+			.fstep {
+				text-align: center
+			}
+
+			.fshape {
+				height: 90px;
+				clip-path: polygon(5% 0, 95% 0, 82% 100%, 18% 100%);
+				background: var(--green);
+				display: grid;
+				place-items: center;
+				color: white;
+				font-size: 20px;
+				font-weight: 900
+			}
+
+			.fstep:nth-child(2) .fshape {
+				background: #278b61
+			}
+
+			.fstep:nth-child(3) .fshape {
+				background: #45aa78
+			}
+
+			.fstep:nth-child(4) .fshape {
+				background: #74bd91
+			}
+
+			.fstep:nth-child(5) .fshape {
+				background: var(--orange)
+			}
+
+			.fstep h3 {
+				font-size: 15px;
+				margin: 12px 0 4px
+			}
+
+			.fstep p {
+				font-size: 11px;
+				color: var(--sub);
+				margin: 0
+			}
+
+			.fstep b {
+				font-size: 12px;
+				color: var(--green)
+			}
+
+			.blueprint {
+				background: white;
+				border: 1px solid var(--line);
+				border-radius: 23px;
+				padding: 18px
+			}
+
+			.brow {
+				display: grid;
+				grid-template-columns: 130px 1fr;
+				gap: 10px;
+				margin: 8px
+			}
+
+			.bname {
+				background: var(--ink);
+				color: white;
+				border-radius: 13px;
+				display: grid;
+				place-items: center;
+				font-weight: 900
+			}
+
+			.bitems {
+				display: grid;
+				grid-template-columns: repeat(4, 1fr);
+				gap: 8px
+			}
+
+			.bitems div {
+				padding: 13px 9px;
+				border-radius: 12px;
+				text-align: center;
+				background: #edf5ef;
+				font-size: 12px
+			}
+
+			.bitems b {
+				display: block;
+				font-size: 14px
+			}
+
+			.brow:nth-child(2) .bitems div {
+				background: #fff0e7
+			}
+
+			.brow:nth-child(3) .bitems div {
+				background: #fff5ca
+			}
+
+			.brow:nth-child(4) .bitems div {
+				background: #eeeafb
+			}
+
+			.brow:nth-child(5) .bitems div {
+				background: #e8f0f6
+			}
+
+			.moments {
+				display: grid;
+				grid-template-columns: repeat(7, 1fr);
+				gap: 8px
+			}
+
+			.moment {
+				background: white;
+				border: 1px solid var(--line);
+				border-radius: 17px;
+				padding: 16px 11px;
+				min-height: 180px;
+				position: relative
+			}
+
+			.moment:not(:last-child):after {
+				content: "→";
+				position: absolute;
+				right: -12px;
+				top: 41px;
+				color: var(--orange);
+				font-size: 18px;
+				z-index: 2
+			}
+
+			.moment i {
+				font-style: normal;
+				width: 30px;
+				height: 30px;
+				border-radius: 50%;
+				background: var(--mint);
+				display: grid;
+				place-items: center;
+				color: var(--green);
+				font-weight: 900
+			}
+
+			.moment h3 {
+				font-size: 14px;
+				margin: 11px 0 5px
+			}
+
+			.moment p {
+				font-size: 11px;
+				color: var(--sub)
+			}
+
+			.moment b {
+				font-size: 11px;
+				color: var(--orange)
+			}
+
+			.case {
+				display: grid;
+				grid-template-columns: 1.58fr .82fr;
+				gap: 17px
+			}
+
+			.case-main,
+			.case-side {
+				border-radius: 22px;
+				padding: 23px
+			}
+
+			.case-main {
+				background: white;
+				border: 1px solid var(--line)
+			}
+
+			.case-side {
+				background: var(--ink);
+				color: white
+			}
+
+			.case-main h3,
+			.case-side h3 {
+				font-size: 19px;
+				margin: 0 0 14px
+			}
+
+			.flow {
+				display: flex;
+				gap: 7px;
+				align-items: stretch
+			}
+
+			.step {
+				flex: 1;
+				min-width: 0;
+				background: #edf5ef;
+				border-radius: 14px;
+				padding: 15px 9px;
+				text-align: center;
+				display: flex;
+				flex-direction: column;
+				justify-content: center;
+				min-height: 140px
+			}
+
+			.step i {
+				font-style: normal;
+				font-size: 27px
+			}
+
+			.step b {
+				font-size: 13px;
+				margin: 5px 0
+			}
+
+			.step span {
+				font-size: 11px;
+				color: var(--sub)
+			}
+
+			.arrow {
+				display: grid;
+				place-items: center;
+				color: var(--orange);
+				font-size: 20px
+			}
+
+			.case-side ul {
+				padding-left: 18px;
+				margin: 0;
+				color: #c5d8cf;
+				font-size: 13px
+			}
+
+			.case-side li+li {
+				margin-top: 9px
+			}
+
+			.owners {
+				display: flex;
+				gap: 6px;
+				flex-wrap: wrap;
+				margin-top: 13px
+			}
+
+			.owners span {
+				padding: 4px 8px;
+				border-radius: 7px;
+				background: var(--mint);
+				color: var(--green);
+				font-size: 10px;
+				font-weight: 900
+			}
+
+			.kpis {
+				display: grid;
+				grid-template-columns: repeat(4, 1fr);
+				gap: 8px;
+				margin-top: 14px
+			}
+
+			.kpis div {
+				background: var(--yellow);
+				border: 1px solid #eed786;
+				border-radius: 12px;
+				padding: 10px;
+				text-align: center;
+				font-size: 10px
+			}
+
+			.kpis b {
+				display: block;
+				color: var(--green);
+				font-size: 12px
+			}
+
+			.example {
+				margin-top: 14px;
+				background: #fff0e7;
+				border-left: 5px solid var(--orange);
+				padding: 13px 17px;
+				border-radius: 0 13px 13px 0;
+				font-size: 13px;
+				font-weight: 750
+			}
+
+			.caps {
+				display: grid;
+				grid-template-columns: 145px 1fr 80px;
+				gap: 8px
+			}
+
+			.crow {
+				display: contents
+			}
+
+			.cname {
+				background: var(--ink);
+				color: white;
+				border-radius: 12px;
+				padding: 14px;
+				font-weight: 900
+			}
+
+			.citems {
+				display: grid;
+				grid-template-columns: repeat(4, 1fr);
+				gap: 7px
+			}
+
+			.citems span {
+				background: white;
+				border: 1px solid var(--line);
+				border-radius: 11px;
+				padding: 11px;
+				font-size: 11px
+			}
+
+			.pri {
+				display: grid;
+				place-items: center;
+				border-radius: 11px;
+				background: var(--lime);
+				font-weight: 900;
+				font-size: 12px
+			}
+
+			.pri.p1 {
+				background: #ffe2d3;
+				color: #9b431c
+			}
+
+			.pri.p2 {
+				background: #e6ece9;
+				color: #5d7169
+			}
+
+			.roadmap {
+				display: grid;
+				grid-template-columns: repeat(3, 1fr);
+				gap: 16px
+			}
+
+			.phase {
+				background: white;
+				border: 1px solid var(--line);
+				border-radius: 22px;
+				padding: 24px;
+				min-height: 360px;
+				position: relative
+			}
+
+			.phase small {
+				color: var(--green);
+				font-weight: 900
+			}
+
+			.phase h3 {
+				font-size: 25px;
+				margin: 5px 0 9px
+			}
+
+			.goal {
+				background: var(--mint);
+				padding: 11px;
+				border-radius: 12px;
+				font-size: 12px;
+				font-weight: 800
+			}
+
+			.phase:nth-child(2) .goal {
+				background: #ffede4
+			}
+
+			.phase:nth-child(3) .goal {
+				background: var(--yellow)
+			}
+
+			.phase ul {
+				font-size: 12px;
+				color: var(--sub);
+				padding-left: 18px
+			}
+
+			.accept {
+				position: absolute;
+				left: 24px;
+				right: 24px;
+				bottom: 22px;
+				border-top: 1px dashed var(--line);
+				padding-top: 11px;
+				font-size: 11px
+			}
+
+			.decisions {
+				display: grid;
+				grid-template-columns: 1fr 1fr;
+				gap: 14px
+			}
+
+			.decision {
+				background: rgba(255, 255, 255, .08);
+				border: 1px solid rgba(255, 255, 255, .14);
+				border-radius: 21px;
+				padding: 22px;
+				display: grid;
+				grid-template-columns: 46px 1fr;
+				gap: 13px
+			}
+
+			.dn {
+				width: 46px;
+				height: 46px;
+				border-radius: 14px;
+				background: var(--lime);
+				color: var(--ink);
+				display: grid;
+				place-items: center;
+				font-weight: 900
+			}
+
+			.decision h3 {
+				margin: 0 0 4px
+			}
+
+			.decision p {
+				margin: 0;
+				color: #c8dad2;
+				font-size: 12px
+			}
+
+			.decision b {
+				display: block;
+				color: var(--lime);
+				font-size: 10px;
+				margin-top: 7px
+			}
+
+			.controls {
+				position: fixed;
+				right: 17px;
+				top: 50%;
+				transform: translateY(-50%);
+				z-index: 50;
+				display: grid;
+				gap: 7px
+			}
+
+			.controls button {
+				width: 38px;
+				height: 38px;
+				border: 1px solid #d3ded7;
+				border-radius: 11px;
+				background: rgba(255, 255, 255, .88);
+				cursor: pointer
+			}
+
+			.controls button:hover {
+				background: var(--lime)
+			}
+
+			.hint {
+				position: fixed;
+				left: 16px;
+				bottom: 14px;
+				z-index: 50;
+				background: rgba(255, 255, 255, .85);
+				padding: 6px 9px;
+				border-radius: 9px;
+				font-size: 10px;
+				color: var(--sub)
+			}
+
+			.progress {
+				position: fixed;
+				top: 0;
+				left: 0;
+				height: 4px;
+				background: var(--orange);
+				z-index: 80
+			}
+
+			@media(max-width:900px) {
+				html {
+					scroll-snap-type: none
+				}
+
+				.slide {
+					height: auto;
+					min-height: 100vh
+				}
+
+				.agenda,
+				.grid4,
+				.conclusions {
+					grid-template-columns: repeat(2, 1fr)
+				}
+
+				.case {
+					grid-template-columns: 1fr
+				}
+
+				.flow {
+					flex-wrap: wrap
+				}
+
+				.step {
+					min-width: 150px
+				}
+
+				.arrow {
+					display: none
+				}
+			}
+
+			@media(max-width:620px) {
+				.slide {
+					padding: 75px 22px 50px
+				}
+
+				.agenda,
+				.grid2,
+				.grid3,
+				.grid4,
+				.conclusions,
+				.choices,
+				.branches,
+				.stages,
+				.funnel,
+				.moments,
+				.roadmap,
+				.decisions,
+				.kpis {
+					grid-template-columns: 1fr
+				}
+
+				.stage:after,
+				.moment:after {
+					display: none
+				}
+
+				.caps {
+					grid-template-columns: 1fr
+				}
+
+				.crow {
+					display: grid
+				}
+
+				.citems {
+					grid-template-columns: 1fr
+				}
+
+				.pri {
+					padding: 8px
+				}
+
+				.controls,
+				.hint {
+					display: none
+				}
+
+				.brow {
+					grid-template-columns: 1fr
+				}
+
+				.bitems {
+					grid-template-columns: 1fr
+				}
+
+				.phase {
+					min-height: 390px
+				}
+			}
+
+			@media print {
+				@page {
+					size: 16in 9in;
+					margin: 0
+				}
+
+				html {
+					scroll-snap-type: none
+				}
+
+				.slide {
+					width: 16in;
+					height: 9in;
+					min-height: 9in;
+					padding: .52in .78in;
+					page-break-after: always
+				}
+
+				.controls,
+				.hint,
+				.progress {
+					display: none
+				}
+
+				.card {
+					box-shadow: none
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<div class="progress" id="progress"></div>
+		<div class="controls"><button onclick="go(-1)">↑</button><button onclick="go(1)">↓</button><button
+				onclick="print()">⎙</button></div>
+		<div class="hint">方向键 / 空格翻页 · 可打印 PDF</div>
+		<main>
+			<section class="slide cover" data-page="">
+				<h1>全渠道会员<br><span class="accent">运营规划</span></h1>
+				<p>从统一会员基础，走向可衡量、可运营、可增长的会员经营体系</p>
+				<div class="ring"></div>
+			</section>
+			<section class="slide" data-page="">
+				<h2 class="title">围绕五个问题展开</h2>
+				<p class="sub">从业务现状出发，最终落到可执行策略和可复用能力。</p>
+				<div class="agenda">
+					<div><span class="n">01</span>
+						<h3>业务数据分析</h3>
+						<p>会员规模如何，用户卡在哪一段，机会空间有多大？</p>
+					</div>
+					<div><span class="n">02</span>
+						<h3>全渠道运营优劣势</h3>
+						<p>现有基础能支撑什么，真正需要补齐什么？</p>
+					</div>
+					<div><span class="n">03</span>
+						<h3>从指标拆解到蓝图设计</h3>
+						<p>增长如何拆解，经营策略与产品能力如何承接？</p>
+					</div>
+					<div><span class="n">04</span>
+						<h3>关键节点策略</h3>
+						<p>渠道引流、会员赋能、首购履约、复购召回与积分权益。</p>
+					</div>
+					<div><span class="n">05</span>
+						<h3>能力沉淀</h3>
+						<p>如何将运营经验转化成可复制的经营体系？</p>
+					</div>
+				</div>
+			</section>
+			<section class="slide dark" data-page="">
+				<div class="top"><span>第一部分 · 业务数据分析</span></div>
+				<div class="statement">驰骋已经具备统一会员、积分互通和全渠道订单基础，下一阶段需要回答：<span
+						class="accent">如何把存量会员资产持续转化为增量 GMV 与可持续复购。</span></div>
+			</section>
+			<section class="slide" data-page="">
+				<div class="top"><span>第一部分 · 业务数据分析</span></div>
+				<h2 class="title">先判断会员<span class="accent">卡在哪一段</span></h2>
+				<p class="sub">先统一统计周期、身份去重和状态口径，再用真实数据替换 XX，确保各层人群互斥且可持续追踪。</p>
+				<div class="stages">
+					<div class="stage"><span>🌊</span><b>全渠道会员大盘</b><strong>XX</strong><small>手机号 / One ID 去重后的有效会员</small></div>
+					<div class="stage"><span>🧭</span><b>商城可转化线索</b><strong>XX</strong><small>来自门店、智能柜、云值守，尚未访问或授权商城</small></div>
+					<div class="stage"><span>🛒</span><b>注册未首购</b><strong>XX</strong><small>已进入商城，注册满 7 日仍未完成有效首购</small></div>
+					<div class="stage"><span>🌱</span><b>活跃购买会员</b><strong>XX</strong><small>近 30 日至少完成 1 笔有效订单</small></div>
+					<div class="stage"><span>🌙</span><b>预流失 / 沉睡会员</b><strong>XX</strong><small>31–89 日未购为预流失，90 日及以上为沉睡</small></div>
+				</div>
+				
+			</section>
+			<section class="slide white" data-page="">
+				<div class="top"><span>第一部分 · 业务数据分析</span></div>
+				<h2 class="title">当前需要重点关注四类经营问题</h2>
+				<div class="conclusions">
+					<div class="conclusion"><span class="ci">🧲</span>
+						<h3>渠道线索未转化</h3>
+						<p>门店、智能柜和云值守已沉淀会员，但部分会员尚未进入或购买商城，需要按来源建立可转化池。</p><b>看：可转化池、触达覆盖率、访问率、首购率</b>
+					</div>
+					<div class="conclusion"><span class="ci">🛒</span>
+						<h3>注册未购未承接</h3>
+						<p>注册后缺少商品、权益和服务的连续承接，特别是注册满 7 日仍未下单的人群。</p><b>看：7 日首购率、首购成本、首购履约成功率</b>
+					</div>
+					<div class="conclusion"><span class="ci">🌱</span>
+						<h3>活跃与复购不足</h3>
+						<p>购买会员占比和频次仍有提升空间，需要围绕消费周期、全品类组合和双履约服务推动下一单。</p><b>看：购买率、30/60 日复购率、下单频次</b>
+					</div>
+					<div class="conclusion"><span class="ci">🌙</span>
+						<h3>沉睡/流失缺少分级处理</h3>
+						<p>应结合历史价值、品类周期和履约体验分级召回；长期无响应人群及时降频并停止补贴。</p><b>看：唤醒率、召回后复购率、单次唤醒成本</b>
+					</div>
+				</div>
+			</section>
+			
+			<section class="slide" data-page="">
+				<div class="top"><span>第二部分 · 全渠道会员运营优劣势一览</span></div>
+				<h2 class="title">基础已经具备，关键是补齐<span class="accent">经营闭环</span></h2>
+				<div class="grid2">
+					<div class="swot good"><span class="tag">优势</span>
+						<h3>可以直接进入经营阶段</h3>
+						<ul>
+						<li>统一会员体系与积分账户已经贯通</li>
+						<li>各渠道订单可查询，具备跨渠道分析基础</li>
+						<li>商城覆盖全品类，水果已形成优势心智</li>
+						<li>快递到家与门店自提可连接线上交易和线下服务</li>
+						</ul>
+					</div>
+					<div class="swot gap"><span class="tag o">关键缺口</span>
+						<h3>数据尚未稳定转化为动作</h3>
+						<ul>
+						<li>生命周期、标签画像和指标口径尚未统一</li>
+						<li>渠道曝光、商城承接和首购履约尚未形成连续旅程</li>
+						<li>推广中心、企微社群和门店缺少统一机会清单</li>
+						<li>渠道贡献、权益成本和增量效果缺少归因复盘</li>
+						</ul>
+					</div>
+				</div>
+				<div class="note"><b>渠道角色：</b>门店承担信任、推荐和自提服务；智能柜承接即时消费与点位流量；云值守沉淀区域固定客群；小程序商城作为全品类交易和会员运营主阵地。</div>
+			</section>
+			<style>
+			  :root{--ink:#123d30;--green:#13764e;--green2:#38a972;--mint:#e7f5ec;--lime:#def45b;--orange:#ff7d43;--yellow:#fff2bd;--purple:#eee9fb;--blue:#e7f1f7;--paper:#f4f7f1;--line:#d9e6dd;--sub:#61766e;--white:#fff}
+			  *{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;color:var(--ink);background:#dfe7df}body{display:grid;place-items:center}
+			  .slide{width:100vw;height:100vh;min-height:720px;max-height:100vh;background:radial-gradient(circle at 94% 3%,#c9efd9 0,transparent 22%),linear-gradient(135deg,#f8faf6,#f1f6ef);padding:38px 5.7vw 30px;position:relative;overflow:hidden;display:flex;flex-direction:column}
+			  .top{display:flex;justify-content:space-between;align-items:center;font-size:11px;font-weight:900;letter-spacing:.12em;color:var(--green)}
+			  h1{font-size:clamp(38px,4.2vw,60px);line-height:1.08;letter-spacing:-.045em;margin:19px 0 7px}.accent{color:var(--green)}
+			  .subtitle{font-size:17px;color:var(--sub);margin:0 0 22px}.subtitle b{color:var(--ink)}
+			  .touchpoints{display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:16px}.touch-label{font-size:11px;font-weight:900;color:var(--green);padding:6px 10px;border-radius:99px;background:var(--mint)}.touch{display:flex;gap:8px}.touch span{padding:7px 12px;border-radius:11px;background:rgba(255,255,255,.82);border:1px solid var(--line);font-size:11px;font-weight:750}.down{color:var(--orange);font-size:19px;font-weight:900}
+			  .logic{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;position:relative}.logic:before{content:"";position:absolute;left:8%;right:8%;top:56px;height:3px;background:linear-gradient(90deg,var(--green),var(--orange));z-index:0}.step{position:relative;z-index:1;border-radius:22px;background:white;border:1px solid var(--line);padding:18px 18px 15px;box-shadow:0 14px 35px rgba(23,66,52,.08);min-height:320px;overflow:hidden}.step:after{content:attr(data-step);position:absolute;right:-4px;bottom:-25px;font-size:105px;font-weight:900;color:rgba(18,61,48,.04)}
+			  .head{display:flex;align-items:center;gap:12px;margin-bottom:13px}.icon{width:58px;height:58px;border-radius:18px;background:var(--green);display:grid;place-items:center;font-size:27px;color:white;box-shadow:0 9px 20px rgba(19,118,78,.2)}.step:nth-child(2) .icon{background:var(--orange)}.step:nth-child(3) .icon{background:#8468c6}.step:nth-child(4) .icon{background:#3d87ae}.head small{display:block;font-size:10px;color:var(--sub);font-weight:900;letter-spacing:.08em}.head h2{font-size:25px;margin:1px 0 0}.meaning{font-size:12px;color:var(--sub);margin:0 0 12px;min-height:38px}.items{display:grid;grid-template-columns:1fr 1fr;gap:7px}.items span{padding:9px 7px;border-radius:10px;background:var(--mint);font-size:11px;text-align:center;font-weight:700}.step:nth-child(2) .items span{background:#fff0e7}.step:nth-child(3) .items span{background:var(--purple)}.step:nth-child(4) .items span{background:var(--blue)}.output{margin-top:12px;border-top:1px dashed var(--line);padding-top:10px;font-size:11px;color:var(--sub)}.output b{display:block;color:var(--green);font-size:13px}.step:nth-child(2) .output b{color:var(--orange)}
+			  .loop{margin-top:15px;background:var(--ink);color:white;border-radius:19px;padding:14px 21px;display:grid;grid-template-columns:150px 1fr 150px;align-items:center;gap:16px}.loop-title b{display:block;color:var(--lime);font-size:15px}.loop-title span{font-size:10px;color:#b7d0c5}.loop-flow{display:flex;align-items:center;justify-content:center;gap:8px}.loop-node{padding:8px 11px;border-radius:10px;background:rgba(255,255,255,.08);font-size:11px;font-weight:800;text-align:center}.arrow{color:var(--lime);font-weight:900}.north{text-align:right}.north small{display:block;font-size:10px;color:#b7d0c5}.north b{color:var(--lime);font-size:18px}
+			  .quote{margin-top:11px;text-align:center;font-size:13px;font-weight:800}.quote span{background:linear-gradient(transparent 65%,var(--lime) 0)}
+			  .page{position:absolute;right:30px;bottom:17px;font-size:10px;font-weight:900;color:#91a69d;letter-spacing:.1em}.print{position:absolute;right:26px;top:67px;border:1px solid var(--line);border-radius:10px;background:rgba(255,255,255,.84);padding:7px 10px;color:var(--ink);font:inherit;font-size:11px;cursor:pointer}.print:hover{background:var(--lime)}
+			  @media(max-width:960px){body{display:block}.slide{height:auto;max-height:none;min-height:100vh}.logic{grid-template-columns:1fr 1fr}.logic:before{display:none}.loop{grid-template-columns:1fr}.north{text-align:left}.loop-flow{flex-wrap:wrap}}
+			  @media(max-width:600px){.slide{padding:28px 20px}.logic{grid-template-columns:1fr}.touchpoints{align-items:flex-start;flex-direction:column}.touch{flex-wrap:wrap}.loop-flow{display:grid}.arrow{transform:rotate(90deg)}.print{display:none}}
+			  @media print{@page{size:16in 9in;margin:0}body{background:white}.slide{width:16in;height:9in;min-height:9in;padding:.42in .72in}.print{display:none}}
+			</style>
+			<section class="slide" data-page="">
+				<div class="top"><span>全渠道会员运营规划 · 核心逻辑</span></div>
+				
+				<h1>从“会员互通”走向<span class="accent">会员经营闭环</span></h1>
+				<p class="subtitle"><b>核心不是汇总数据，</b>而是让全渠道每一次触达、交易与履约，都能被识别、承接、运营和复盘。</p>
+				
+				<div class="touchpoints">
+				  <span class="touch-label">全渠道用户触点</span>
+				  <div class="touch"><span>🏪 线下门店</span><span>🥤 智能柜</span><span>🔓 云值守</span><span>📱 小程序商城</span></div>
+				  <span class="down">↓</span>
+				</div>
+				
+				<section class="logic">
+				  <article class="step" data-step="01">
+				    <div class="head"><div class="icon">👁️</div><div><small>第一层 · 识别机会</small><h2>看得清</h2></div></div>
+				    <p class="meaning">知道会员是谁、从哪里来、处于什么状态，以及经历了怎样的交易和服务。</p>
+				    <div class="items"><span>渠道来源</span><span>会员状态</span><span>品类偏好</span><span>交易行为</span><span>履约结果</span><span>价值与风险</span></div>
+				    <div class="output">从“有多少会员”升级为“哪里存在增长机会”。</div>
+				  </article>
+				
+				  <article class="step" data-step="02">
+				    <div class="head"><div class="icon">🧲</div><div><small>第二层 · 承接意图</small><h2>接得住</h2></div></div>
+				    <p class="meaning">把渠道中的曝光与兴趣，顺畅承接到萝卜白菜商城的访问、注册和购买。</p>
+					<div class="items"><span>渠道码与来源归因</span><span>渠道曝光位</span><span>承接落地页</span><span>积分权益互通</span><span>全品类货盘</span><span>快递 / 自提服务</span></div>
+				    <div class="output">渠道流量不再流失，每个入口都可追踪转化效果。</div>
+				  </article>
+				
+				  <article class="step" data-step="03">
+				    <div class="head"><div class="icon">⚙️</div><div><small>第三层 · 推动行动</small><h2>能运营</h2></div></div>
+				    <p class="meaning">围绕会员生命周期，在关键节点自动触发策略，并赋能推广、企微、门店执行。</p>
+				    <div class="items"><span>标签与分层</span><span>人群圈选</span><span>积分权益</span><span>自动化旅程</span><span>企微 / 推广赋能</span><span>用户触达</span></div>
+				    <div class="output">将洞察变成机会清单、运营任务和服务动作。</div>
+				  </article>
+				
+				  <article class="step" data-step="04">
+				    <div class="head"><div class="icon">📈</div><div><small>第四层 · 优化投入</small><h2>会决策</h2></div></div>
+				    <p class="meaning">衡量每个渠道、策略和权益是否产生真实增量，并持续调整资源投放。</p>
+				    <div class="items"><span>转化漏斗</span><span>新老客贡献</span><span>实验与对照</span><span>渠道归因</span><span>成本与预警</span><span>经营复盘</span></div>
+				    <div class="output">找到下一步最值得投入的人群、节点和策略。</div>
+				  </article>
+				</section>
+				
+				<section class="loop">
+				  <div class="loop-title"><b>会员运营体系</b><span>数据、策略、执行、结果持续循环</span></div>
+				  <div class="loop-flow"><span class="loop-node">发现机会</span><span class="arrow">→</span><span class="loop-node">制定策略</span><span class="arrow">→</span><span class="loop-node">协同执行</span><span class="arrow">→</span><span class="loop-node">衡量增量</span><span class="arrow">→</span><span class="loop-node">策略迭代</span></div>
+				  <div class="north"><small>最终目标</small><b>会员 GMV 与净贡献持续增长</b></div>
+				</section>
+				<div class="quote"><span>看得清是前提，接得住是转化，能运营是增长，会决策是持续优化。</span></div>
+			
+			</section>
+			
+			<section class="slide" data-page="">
+				<div class="top"><span>第三部分 · 从指标拆解到蓝图设计</span></div>
+				<h2 class="title">用指标树解释<span class="accent">增长来自哪里</span></h2>
+				<div class="eq">有效会员 GMV = 新客有效 GMV + 老客有效 GMV</div>
+				<div class="branches">
+					<div class="branch">
+						<h3>新客有效 GMV</h3>
+						<div class="formula"><em>渠道可转化会员数</em> × 触达覆盖率 × 入口访问率 × 首购转化率 × 首单实付客单价</div>
+						<p>回答：渠道中有多少可运营会员，被有效触达并完成商城首购？</p>
+					</div>
+					<div class="branch old">
+						<h3>老客有效 GMV</h3>
+						<div class="formula"><em>期初存量老客数</em> × 期间购买率 × 人均下单频次 × 老客实付客单价</div>
+						<p>回答：有多少老客回来购买、购买几次、每次实际支付多少？</p>
+					</div>
+				</div>
+				<div class="note"><b>统一口径：</b>有效 GMV 扣除取消与退款；积分、优惠券和额外履约投入计入经营成本，用“会员净贡献”单独评价投入产出。</div>
+			</section>
+			<section class="slide white" data-page="">
+				<div class="top"><span>第三部分 · 从指标拆解到蓝图设计</span></div>
+				<h2 class="title">新客增长：逐层减少漏损</h2>
+				<div class="funnel">
+					<div class="fstep">
+						<div class="fshape">线索池</div>
+						<h3>可转化渠道会员</h3>
+						<p>统一身份标识、渠道会员统一入库管理</p>
+					</div>
+					<div class="fstep">
+						<div class="fshape">触达</div>
+						<h3>看到入口或消息</h3>
+						<p>平台曝光、私域运营、支付页</p>
+					</div>
+					<div class="fstep">
+						<div class="fshape">访问</div>
+						<h3>进入商城承接页</h3>
+						<p>优势商品、专属权益、服务保障</p>
+					</div>
+					<div class="fstep">
+						<div class="fshape">首购</div>
+						<h3>首次有效购买</h3>
+						<p>新人专场、新人券包、组合活动品</p>
+					</div>
+					<div class="fstep">
+						<div class="fshape">GMV</div>
+						<h3>首单有效贡献</h3>
+						<p>实付金额扣除取消与退款</p>
+					</div>
+				</div>
+				<div class="note"><b>管理重点：</b>先找出漏损最大的一层，再针对入口、商品、权益或履约做实验；GMV 与会员净贡献同时复盘。</div>
+			</section>
+			
+			<section class="slide white blueprint-slide" data-page="">
+				<style>
+					.blueprint-slide {
+						justify-content: flex-start;
+						padding-top: 62px;
+						background: radial-gradient(circle at 92% 4%, #e9f5e7 0, transparent 27%), #f5f7f2
+					}
+
+					.blueprint-slide .title {
+						font-size: clamp(31px, 3.15vw, 47px);
+						margin-bottom: 5px
+					}
+
+					.blueprint-slide .sub {
+						font-size: clamp(13px, 1.08vw, 17px);
+						margin-bottom: 13px
+					}
+
+					.bp-map {
+						flex: 1;
+						min-height: 505px;
+						background: rgba(255, 255, 255, .92);
+						border: 1px solid #d8e3da;
+						border-radius: 24px;
+						box-shadow: 0 14px 38px rgba(20, 60, 48, .08);
+						padding: 17px 22px;
+						display: grid;
+						grid-template-columns: 92px 1fr;
+						grid-template-rows: .72fr 1.72fr 1fr .72fr .52fr;
+						gap: 9px 15px
+					}
+
+					.bp-label {
+						display: flex;
+						align-items: center;
+						font-size: 12px;
+						font-weight: 850;
+						color: #60746c;
+						letter-spacing: .04em
+					}
+
+					.bp-band {
+						border-radius: 16px;
+						display: flex;
+						align-items: center;
+						justify-content: center;
+						text-align: center;
+						padding: 9px 16px
+					}
+
+					.bp-touch {
+						background: #eaf0df;
+						flex-direction: column
+					}
+
+					.bp-touch strong {
+						font-size: 18px;
+						letter-spacing: .04em
+					}
+
+					.bp-touch span,
+					.bp-data span,
+					.bp-govern span {
+						font-size: 11px;
+						color: #65766e;
+						margin-top: 4px
+					}
+
+					.bp-center {
+						background: linear-gradient(135deg, #174c3a, #256346);
+						border-radius: 20px;
+						padding: 13px 20px 16px;
+						color: white;
+						display: flex;
+						flex-direction: column;
+						justify-content: center
+					}
+
+					.bp-center-title {
+						text-align: center;
+						font-size: 20px;
+						font-weight: 900;
+						margin-bottom: 12px
+					}
+
+					.bp-modules {
+						display: grid;
+						grid-template-columns: repeat(5, 1fr);
+						gap: 12px
+					}
+
+					.bp-module {
+						min-width: 0;
+						background: #f3f7e9;
+						color: var(--ink);
+						border-radius: 14px;
+						padding: 12px 8px 10px;
+						text-align: center;
+						box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .55)
+					}
+
+					.bp-module b,
+					.bp-service b {
+						display: block;
+						font-size: 15px;
+						margin-bottom: 5px
+					}
+
+					.bp-module span,
+					.bp-service span {
+						display: block;
+						font-size: 10.5px;
+						line-height: 1.6;
+						color: #587066
+					}
+
+					.bp-services {
+						display: grid;
+						grid-template-columns: repeat(3, 1fr);
+						gap: 18px
+					}
+
+					.bp-service {
+						border-radius: 16px;
+						padding: 11px 14px;
+						text-align: center;
+						display: flex;
+						flex-direction: column;
+						justify-content: center
+					}
+
+					.bp-service:nth-child(1) { background: #fff1d8 }
+					.bp-service:nth-child(2) { background: #e7f0e3 }
+					.bp-service:nth-child(3) { background: #e5eef5 }
+					.bp-data {
+						background: #edf2e7;
+						flex-direction: column
+					}
+
+					.bp-data strong {
+						font-size: 17px
+					}
+
+					.bp-govern {
+						background: #dfe9d2
+					}
+
+					.bp-govern strong {
+						font-size: 13px;
+						margin-right: 18px
+					}
+
+					@media(max-width:900px) {
+						.bp-map { min-height: 650px; grid-template-columns: 78px 1fr }
+						.bp-modules { grid-template-columns: repeat(3, 1fr) }
+					}
+
+					@media print {
+						.blueprint-slide { padding-top: .48in }
+						.bp-map { min-height: 6.15in }
+					}
+				</style>
+				<div class="top"><span>第三部分 · 从指标拆解到蓝图设计</span></div>
+				<h2 class="title">会员经营中心连接<span class="accent">触点、交易、履约与决策</span></h2>
+				<p class="sub">以小程序商城为经营主阵地：向上统一承接多渠道触点，向下连接商品交易、双履约、分析决策与数据治理。</p>
+				<div class="bp-map">
+					<div class="bp-label">用户触点层</div>
+					<div class="bp-band bp-touch">
+						<strong>门店　·　智能柜　·　云值守　·　小程序商城</strong>
+						<span>活动页　商品页　积分商城　会员中心　服务通知</span>
+					</div>
+
+					<div class="bp-label">经营应用层</div>
+					<div class="bp-center">
+						<div class="bp-center-title">全渠道会员经营中心</div>
+						<div class="bp-modules">
+							<div class="bp-module"><b>会员中心</b><span>档案 · 标签 · 分层<br>渠道关系 · 生命周期</span></div>
+							<div class="bp-module"><b>权益中心</b><span>积分 · 券 · 任务<br>预算 · 规则 · 回收</span></div>
+							<div class="bp-module"><b>营销中心</b><span>人群 · 活动 · 触达<br>自动化旅程 · 效果回收</span></div>
+							<div class="bp-module"><b>商品中心</b><span>全品类 · 优势水果<br>场景组合 · 个性推荐</span></div>
+							<div class="bp-module"><b>服务中心</b><span>物流 · 自提 · 售后<br>关怀 · 异常处理</span></div>
+						</div>
+					</div>
+
+					<div class="bp-label">业务服务层</div>
+					<div class="bp-services">
+						<div class="bp-service"><b>商品交易</b><span>商品 · 库存 · 价格 · 订单 · 支付<br>促销 · 退款 </span></div>
+						<div class="bp-service"><b>履约服务</b><span>快递发货 · 物流 · 签收<br>门店自提 · 通知 · 核销</span></div>
+						<div class="bp-service"><b>分析决策</b><span>漏斗 · 归因 · 人群 <br>实验 · 看板 · 预警</span></div>
+					</div>
+
+					<div class="bp-label">数据底座层</div>
+					<div class="bp-band bp-data">
+						<strong>统一会员与全渠道数据底座</strong>
+						<span>会员主数据　渠道订单　商品主数据　积分流水　行为事件　履约状态　订单售后</span>
+					</div>
+
+					<div class="bp-label">治理保障层</div>
+					<div class="bp-band bp-govern">
+						<strong>经营规则与协同保障</strong>
+						<span>数据口径 · 权限授权 · 触达合规 · 预算控制 · 门店协同 · 异常风控 · 经营责任</span>
+					</div>
+				</div>
+			</section>
+			<section class="slide white member-loop-slide" data-page="">
+				<style>
+					.member-loop-slide {
+						justify-content: flex-start;
+						padding-top: 58px;
+						background: radial-gradient(circle at 88% 7%, #e4f3ee 0, transparent 28%), #f6f8f4
+					}
+
+					.member-loop-slide .title {
+						font-size: clamp(30px, 2.95vw, 44px);
+						margin-bottom: 5px
+					}
+
+					.member-loop-slide .sub {
+						font-size: clamp(13px, 1.08vw, 17px);
+						margin-bottom: 12px
+					}
+
+					.mo-board {
+						flex: none;
+						height: 522px;
+						background: rgba(255, 255, 255, .94);
+						border: 1px solid #d8e5dc;
+						border-radius: 24px;
+						box-shadow: 0 14px 38px rgba(20, 60, 48, .08);
+						padding: 16px 19px 14px;
+						display: grid;
+						grid-template-rows: 310px 116px 42px;
+						gap: 11px
+					}
+
+					.mo-main {
+						display: grid;
+						grid-template-columns: 245px 52px 1fr;
+						gap: 14px;
+						min-height: 0
+					}
+
+					.mo-sources {
+						display: grid;
+						grid-template-rows: 1fr 1fr;
+						gap: 11px
+					}
+
+					.mo-source {
+						border: 1px solid #b8dac3;
+						background: linear-gradient(135deg, #f7fcf7, #eaf6ed);
+						border-radius: 17px;
+						padding: 10px 13px;
+						display: flex;
+						flex-direction: column;
+						justify-content: center;
+						min-height: 0
+					}
+
+					.mo-source-head {
+						display: flex;
+						align-items: center;
+						gap: 8px;
+						font-size: 17px;
+						font-weight: 900;
+						margin-bottom: 7px
+					}
+
+					.mo-source-head i {
+						width: 31px;
+						height: 31px;
+						border-radius: 50%;
+						background: var(--green);
+						color: white;
+						display: grid;
+						place-items: center;
+						font-style: normal;
+						font-size: 15px
+					}
+
+					.mo-source-items {
+						display: grid;
+						grid-template-columns: 1fr 1fr;
+						gap: 8px
+					}
+
+					.mo-source-items span {
+						background: white;
+						border: 1px solid #d7e9dc;
+						border-radius: 11px;
+						padding: 8px 4px;
+						text-align: center;
+						font-size: 11px;
+						font-weight: 800;
+						color: #355b4c
+					}
+
+					.mo-ingest {
+						display: flex;
+						flex-direction: column;
+						align-items: center;
+						justify-content: center;
+						gap: 8px;
+						color: #a76400;
+						text-align: center;
+						font-size: 9px;
+						font-weight: 900
+					}
+
+					.mo-ingest b {
+						width: 48px;
+						height: 34px;
+						clip-path: polygon(0 32%, 62% 32%, 62% 0, 100% 50%, 62% 100%, 62% 68%, 0 68%);
+						background: linear-gradient(90deg, #ffd77e, #f39a18)
+					}
+
+					.mo-center {
+						border: 1px solid #9fcab0;
+						border-radius: 19px;
+						overflow: hidden;
+						background: #f7fbf8;
+						display: flex;
+						flex-direction: column
+					}
+
+					.mo-center-head {
+						background: linear-gradient(120deg, #176542, #0f4b37);
+						color: white;
+						padding: 9px 16px;
+						display: flex;
+						align-items: center;
+						justify-content: space-between
+					}
+
+					.mo-center-head strong {
+						font-size: 19px
+					}
+
+					.mo-center-head span {
+						font-size: 10px;
+						color: #d5ecdf
+					}
+
+					.mo-engines {
+						flex: 1;
+						display: grid;
+						grid-template-columns: 1fr;
+						grid-template-rows: 1fr 1fr;
+						gap: 8px;
+						padding: 9px 12px 7px;
+						min-height: 0
+					}
+
+					.mo-engine {
+						border-radius: 15px;
+						padding: 7px 9px;
+						display: grid;
+						grid-template-columns: 124px 1fr;
+						align-items: center;
+						gap: 8px;
+						min-height: 0
+					}
+
+					.mo-engine.segment { background: #eaf5e9 }
+					.mo-engine.tags { background: #e7f2f8 }
+
+					.mo-engine h3 {
+						font-size: 15px;
+						margin: 0;
+						display: flex;
+						flex-direction: column;
+						align-items: flex-start;
+						justify-content: center
+					}
+
+					.mo-engine h3 small {
+						font-size: 9px;
+						font-weight: 700;
+						color: #668078;
+						margin-top: 3px
+					}
+
+					.mo-pills {
+						display: grid;
+						grid-template-columns: repeat(5, 1fr);
+						gap: 6px;
+						height: 54px
+					}
+
+					.mo-pill {
+						background: rgba(255, 255, 255, .86);
+						border: 1px solid rgba(24, 104, 70, .1);
+						border-radius: 10px;
+						padding: 4px 3px;
+						text-align: center;
+						display: flex;
+						flex-direction: column;
+						justify-content: center;
+						font-size: 9.5px;
+						font-weight: 850;
+						line-height: 1.35
+					}
+
+					.mo-pill i {
+						font-style: normal;
+						font-size: 14px;
+						margin-bottom: 2px
+					}
+
+					.mo-match {
+						margin: 0 12px 8px;
+						background: #fff4d6;
+						border: 1px solid #f2d38b;
+						border-radius: 10px;
+						padding: 5px 10px;
+						text-align: center;
+						font-size: 10.5px;
+						font-weight: 850;
+						color: #7b5613
+					}
+
+					.mo-capability {
+						border: 1px solid #f0c36e;
+						background: linear-gradient(135deg, #fffaf0, #fff4df);
+						border-radius: 17px;
+						padding: 10px 13px;
+						display: grid;
+						grid-template-columns: 160px repeat(4, 1fr);
+						gap: 9px;
+						align-items: stretch
+					}
+
+					.mo-cap-title {
+						background: linear-gradient(135deg, #e49a18, #c87300);
+						color: white;
+						border-radius: 12px;
+						display: flex;
+						flex-direction: column;
+						align-items: center;
+						justify-content: center;
+						font-weight: 900;
+						font-size: 15px
+					}
+
+					.mo-cap-title small {
+						font-size: 9px;
+						font-weight: 700;
+						color: #fff1cf;
+						margin-top: 4px
+					}
+
+					.mo-cap {
+						background: rgba(255,255,255,.82);
+						border: 1px solid #f3d99f;
+						border-radius: 11px;
+						padding: 8px 7px;
+						text-align: center;
+						display: flex;
+						flex-direction: column;
+						justify-content: center
+					}
+
+					.mo-cap b {
+						font-size: 12px;
+						margin-bottom: 4px
+					}
+
+					.mo-cap span {
+						font-size: 9px;
+						line-height: 1.45;
+						color: #74644c
+					}
+
+					.mo-outcomes {
+						background: #173f32;
+						color: white;
+						border-radius: 12px;
+						display: flex;
+						align-items: center;
+						justify-content: center;
+						gap: 0;
+						font-size: 11px;
+						font-weight: 850
+					}
+
+					.mo-outcomes b {
+						color: var(--lime);
+						margin-right: 16px
+					}
+
+					.mo-outcomes span + span:before {
+						content: "·";
+						color: #88a89c;
+						margin: 0 12px
+					}
+
+					@media(max-width:900px) {
+						.mo-board { height: auto; min-height: 680px; grid-template-rows: 1fr auto auto }
+						.mo-main { grid-template-columns: 210px 38px 1fr }
+						.mo-engine { grid-template-columns: 1fr }
+						.mo-pills { grid-template-columns: repeat(3,1fr); height: auto }
+						.mo-capability { grid-template-columns: repeat(2,1fr) }
+					}
+
+					@media print {
+						.member-loop-slide { padding-top: .48in }
+						.mo-board { height: 5.75in }
+					}
+				</style>
+				<div class="top"><span>第三部分 · 从指标拆解到蓝图设计</span></div>
+				<h2 class="title">会员流量统一入池，用“分层 × 标签”驱动<span class="accent">精细化运营</span></h2>
+				<p class="sub">经营蓝图落到具体机制：先识别会员所处阶段，再匹配商品、权益、内容和服务，最后执行并回收经营结果。</p>
+				<div class="mo-board">
+					<div class="mo-main">
+						<div class="mo-sources">
+							<div class="mo-source">
+								<div class="mo-source-head"><i>+</i><span>新增触点流量</span></div>
+								<div class="mo-source-items"><span>🏪 线下门店</span><span>💬 线上社群</span></div>
+							</div>
+							<div class="mo-source">
+								<div class="mo-source-head"><i>◎</i><span>渠道存量会员</span></div>
+								<div class="mo-source-items"><span>🧊 智能柜会员</span><span>☁️ 云值守会员</span></div>
+							</div>
+						</div>
+						<div class="mo-ingest"><b></b><span>统一识别<br>归因入池</span></div>
+						<div class="mo-center">
+							<div class="mo-center-head"><strong>会员识别与洞察双引擎</strong><span>同一会员 · 实时状态 · 动态画像</span></div>
+							<div class="mo-engines">
+								<div class="mo-engine segment">
+									<h3><span>会员分层</span><small>现在处于什么阶段</small></h3>
+									<div class="mo-pills">
+										<div class="mo-pill"><i>🌱</i>潜在会员</div>
+										<div class="mo-pill"><i>✨</i>新客会员</div>
+										<div class="mo-pill"><i>🔥</i>活跃会员</div>
+										<div class="mo-pill"><i>⚠️</i>预流失会员</div>
+										<div class="mo-pill"><i>🌙</i>沉睡会员</div>
+									</div>
+								</div>
+								<div class="mo-engine tags">
+									<h3><span>会员标签</span><small>需要用什么策略</small></h3>
+									<div class="mo-pills">
+										<div class="mo-pill"><i>👤</i>基础标签</div>
+										<div class="mo-pill"><i>🧭</i>渠道标签</div>
+										<div class="mo-pill"><i>👣</i>行为标签</div>
+										<div class="mo-pill"><i>🛍️</i>交易标签</div>
+										<div class="mo-pill"><i>📦</i>履约售后</div>
+									</div>
+								</div>
+							</div>
+							<div class="mo-match">分层确定运营时机　×　标签匹配商品、权益、内容与服务</div>
+						</div>
+					</div>
+					<div class="mo-capability">
+						<div class="mo-cap-title">会员运营能力<small>策略执行与结果回流</small></div>
+						<div class="mo-cap"><b>会员基础管理</b><span>统一身份 · 来源关系<br>账户权益 · 触达授权</span></div>
+						<div class="mo-cap"><b>自动化标签</b><span>规则标签 · 事件标签<br>定时更新 · 异常校验</span></div>
+						<div class="mo-cap"><b>生命周期旅程</b><span>首购转化 · 推进二购<br>活跃维护 · 流失召回</span></div>
+						<div class="mo-cap"><b>多渠道执行</b><span>商城 · 推广中心<br>企微 · 社群 · 服务通知</span></div>
+					</div>
+					<div class="mo-outcomes"><b>经营结果</b><span>拉新转化率 ↑</span><span>首购率 ↑</span><span>二购率 ↑</span><span>下单频次 ↑</span><span>唤醒率 ↑</span><span>会员 GMV ↑</span></div>
+				</div>
+			</section>
+			<section class="slide" data-page="">
+				<div class="top"><span>第四部分 · 关键节点策略</span></div>
+				<h2 class="title">渠道线索管理与引流：<span class="accent">每个入口可追踪</span></h2>
+				<p class="sub">在云值守、智能柜和线下支付平台配置商城入口，把已有渠道流量转化为可识别、可追踪、可优化的商城访问与首购。</p>
+				<div class="case">
+					<div class="case-main">
+						<h3>业务闭环</h3>
+						<div class="flow">
+							<div class="step"><i>🖥️</i><b>渠道曝光</b><span>云值守 / 智能柜 / 线下支付</span></div>
+							<div class="arrow">→</div>
+							<div class="step"><i>🧭</i><b>来源识别</b><span>平台、门店、设备、点位</span></div>
+							<div class="arrow">→</div>
+							<div class="step"><i>📱</i><b>商城承接</b><span>专属页面、优势商品、新人权益</span></div>
+							<div class="arrow">→</div>
+							<div class="step"><i>📊</i><b>实时监控</b><span>曝光、访问、注册、首购、GMV</span></div>
+							<div class="arrow">→</div>
+							<div class="step"><i>🔁</i><b>针对优化</b><span>点位、素材、货盘、权益</span></div>
+						</div>
+						<div class="kpis">
+							<div><b>曝光点击率</b>素材效果</div>
+							<div><b>访问注册率</b>承接效果</div>
+							<div><b>7 日首购率</b>转化效果</div>
+							<div><b>渠道增量 GMV</b>投入产出</div>
+						</div>
+					</div>
+					<div class="case-side">
+						<h3>系统需要支持</h3>
+						<ul>
+							<li>多平台曝光位、素材与落地页统一配置。</li>
+							<li>数据埋点记录平台、门店、设备、点位和活动来源。</li>
+							<li>同一会员跨入口去重，保留首次来源与本次归因。</li>
+							<li>实时展示渠道转化漏斗，支持点位和活动横向对比。</li>
+						</ul>
+						<div class="owners"><span>渠道运营</span><span>商城运营</span><span>产品数据</span></div>
+					</div>
+				</div>
+				<div class="example"><b>案例：</b>智能柜首页新增“积分商城”资源位，按设备与点位生成独立来源参数；用户进入萝卜白菜商城后承接积分任务和优势商品，并按访问、7 日首购与有效 GMV 对比点位效果。</div>
+			</section>
+			<section class="slide white" data-page="">
+				<div class="top"><span>第四部分 · 关键节点策略</span></div>
+				<h2 class="title">会员运营与赋能：<span class="accent">让数据指导一线行动</span></h2>
+				<p class="sub">会员中台定义目标、人群与策略，并将机会清单同步到推广中心、企微和门店，指导一线执行，触达与成交结果再回流。</p>
+				<div class="case">
+					<div class="case-main">
+						<h3>从策略到行动</h3>
+						<div class="flow">
+							<div class="step"><i>🎯</i><b>中台定策略</b><span>目标、人群、规则、权益、活动</span></div>
+							<div class="arrow">→</div>
+							<div class="step"><i>🏷️</i><b>标签识别人群</b><span>来源、生命周期、偏好、价值、风险</span></div>
+							<div class="arrow">→</div>
+							<div class="step"><i>🔄</i><b>同步业务工具</b><span>推广中心、企微、社群助手</span></div>
+							<div class="arrow">→</div>
+							<div class="step"><i>🤝</i><b>一线执行</b><span>会员画像、机会清单、理由、商品与话术</span></div>
+							<div class="arrow">→</div>
+							<div class="step"><i>✅</i><b>结果回流</b><span>触达、反馈、下单</span></div>
+						</div>
+						
+					</div>
+					<div class="case-side">
+						<h3>一线看到什么</h3>
+						<ul>
+							<li>会员来源、区域、最近购买和品类偏好。</li>
+							<li>当前处于活跃复购窗口还是预流失阶段。</li>
+							<li>结合平台活动、会员偏好推荐什么。</li>
+							<li>对应权益、沟通话术与服务提醒。</li>
+						</ul>
+						<div class="owners"><span>会员中台</span><span>全员营销推广</span><span>企微社群</span></div>
+					</div>
+				</div>
+				<div class="example"><b>案例：</b>圈选“近 60 日在线下购买应季水果、但商城未购买”的会员，将偏好、推荐理由和活动商品同步至“我的店”；门店员工定向推荐产地直发组合，触达、首购和复购结果自动回流会员中台。</div>
+			</section>
+			<section class="slide" data-page="">
+				<div class="top"><span>第四部分 · 关键节点策略</span></div>
+				<h2 class="title">新人首购履约升级：<span class="accent">做好第一单，才有第二单</span></h2>
+				<p class="sub">首购不是一次营销成交，而是供应链、门店和客服共同参与的关键体验节点；首单履约质量直接影响第二单。</p>
+				<div class="case">
+					<div class="case-main">
+						<h3>首购订单专项服务链</h3>
+						<div class="flow">
+							<div class="step"><i>🆕</i><b>首购订单标记</b><span>订单、会员、渠道标识</span></div>
+							<div class="arrow">→</div>
+							<div class="step"><i>📦</i><b>供应链优先检查</b><span>库存、品质、包装、发货时效</span></div>
+							<div class="arrow">→</div>
+							<div class="step"><i>🏪</i><b>门店服务升级</b><span>备货提醒、核销指引、缺货替代</span></div>
+							<div class="arrow">→</div>
+							<div class="step"><i>🚚</i><b>履约状态透明</b><span>快递 / 自提通知 / 异常预警</span></div>
+							<div class="arrow">→</div>
+							<div class="step"><i>💬</i><b>签收后关怀</b><span>满意度、问题处理、复购推荐</span></div>
+						</div>
+						<div class="kpis">
+							<div><b>履约成功率</b>按承诺完成</div>
+							<div><b>首购退款率</b>首单质量</div>
+							<div><b>首购满意度</b>服务感知</div>
+							<div><b>30 日复购率</b>体验转化</div>
+						</div>
+					</div>
+					<div class="case-side">
+						<h3>服务升级规则</h3>
+						<ul>
+							<li>首购标签贯穿订单、仓配、门店和客服。</li>
+							<li>缺货、延迟、售后提高预警等级。</li>
+							<li>门店端展示“新人首购”和服务提示。</li>
+							<li>签收后先确认体验，再触发复购旅程。</li>
+						</ul>
+						<div class="owners"><span>供应链</span><span>门店</span><span>客服</span><span>会员运营</span></div>
+					</div>
+				</div>
+				<div class="example"><b>案例：</b>新人订单按履约方式自动分流：门店自提订单推送门店提前备货并提示核销服务；产地直发 / 一件代发订单推送内勤优先确认库存、包装和发货时效，异常订单升级预警并主动联系用户。</div>
+			</section>
+			<section class="slide white" data-page="">
+				<div class="top"><span>第四部分 · 关键节点策略</span></div>
+				<h2 class="title">积分权益生态：从统一账户变成<span class="accent">行为激励工具</span></h2>
+				<p class="sub">围绕首购、复购和渠道协同设计任务，避免无条件普发补贴。</p>
+				<div class="case">
+					<div class="case-main">
+						<h3>目标行为闭环</h3>
+						<div class="flow">
+							<div class="step"><i>💰</i><b>赚积分</b><span>渠道消费、线上下单、活动互动</span></div>
+							<div class="arrow">→</div>
+							<div class="step"><i>🎫</i><b>用积分</b><span>抵扣、换券、换商品、兑换服务</span></div>
+							<div class="arrow">→</div>
+							<div class="step"><i>🎯</i><b>做任务</b><span>完成首购、尝试新品、完善基础资料</span></div>
+							<div class="arrow">→</div>
+							<div class="step"><i>🔁</i><b>形成习惯</b><span>复购、多渠道活跃、提高贡献</span></div>
+						</div>
+						
+					</div>
+					<div class="case-side">
+						<h3>权益设计原则</h3>
+						<ul>
+							<li>对准具体行为，不做无条件普发。</li>
+							<li>明确适用商品、渠道、使用门槛和预算上限。</li>
+							<li>退款自动回收权益，控制异常套利。</li>
+							<li>观察停止权益后是否形成自然复购。</li>
+						</ul>
+						<div class="owners"><span>会员运营</span><span>商品运营</span><span>财务风控</span></div>
+					</div>
+				</div>
+				<div class="example"><b>案例：</b>智能柜会员完成商城首购获得积分，30 日内完成二购再获得阶梯积分；积分可兑换门店自提券或指定商品，发生退款时自动回收，并按增量 GMV 和权益成本复盘。</div>
+			</section>
+			<section class="slide white retention-slide" data-page="">
+				<style>
+					.retention-slide { justify-content:flex-start; padding-top:62px; background:radial-gradient(circle at 92% 5%,#e4f3ee 0,transparent 28%),#f6f8f4 }
+					.retention-slide .title { font-size:clamp(31px,3.15vw,47px); margin-bottom:5px }
+					.retention-slide .sub { font-size:clamp(13px,1.08vw,17px); margin-bottom:14px }
+					.ret-board { display:grid; grid-template-columns:1.6fr .72fr; gap:16px; min-height:385px }
+					.ret-main { background:white; border:1px solid var(--line); border-radius:21px; padding:20px; box-shadow:0 12px 30px rgba(20,60,48,.06) }
+					.ret-main h3,.ret-rules h3 { margin:0 0 14px; font-size:18px }
+					.ret-flow { display:grid; grid-template-columns:repeat(9,auto); gap:7px; align-items:stretch }
+					.ret-step { min-width:0; min-height:142px; background:#edf5ef; border-radius:14px; padding:13px 8px; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center }
+					.ret-step i { font-style:normal; font-size:25px }
+					.ret-step b { font-size:12px; margin:6px 0 4px }
+					.ret-step span { font-size:9.5px; line-height:1.45; color:var(--sub) }
+					.ret-arrow { display:grid; place-items:center; color:var(--orange); font-size:18px; font-weight:900 }
+					.ret-kpis { display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin-top:13px }
+					.ret-kpis div { background:#f7f9f6; border:1px solid var(--line); border-radius:11px; padding:9px; font-size:9.5px; color:var(--sub) }
+					.ret-kpis b { display:block; color:var(--ink); font-size:11px; margin-bottom:2px }
+					.ret-rules { background:linear-gradient(145deg,#164b38,#113d30); color:white; border-radius:21px; padding:21px }
+					.ret-rules ul { margin:0; padding-left:18px; color:#c8dcd3; font-size:11.5px; line-height:1.55 }
+					.ret-rules li+li { margin-top:9px }
+					.ret-rules .owners { margin-top:15px }
+					.ret-example { margin-top:14px; background:#fff0e7; border-left:5px solid var(--orange); padding:13px 17px; border-radius:0 13px 13px 0; font-size:12px; font-weight:750 }
+					@media(max-width:900px){.ret-board{grid-template-columns:1fr}.ret-flow{grid-template-columns:repeat(3,1fr)}.ret-arrow{display:none}.ret-kpis{grid-template-columns:1fr 1fr}}
+					@media print{.retention-slide{padding-top:.48in}}
+				</style>
+				<div class="top"><span>第四部分 · 关键节点策略</span><span>RETENTION</span></div>
+				<h2 class="title">老客复购与流失召回：抓住<span class="accent">下一次购买窗口</span></h2>
+				<p class="sub">按照品类消费周期和会员价值识别机会：活跃会员推动连带与复购，预流失会员优先找原因，沉睡会员控制召回成本。</p>
+				<div class="ret-board">
+					<div class="ret-main">
+						<h3>从消费周期到下一单</h3>
+						<div class="ret-flow">
+							<div class="ret-step"><i>🧾</i><b>识别历史周期</b><span>最近购买、品类间隔、客单与履约体验</span></div><div class="ret-arrow">→</div>
+							<div class="ret-step"><i>🏷️</i><b>判断会员状态</b><span>活跃、复购窗口、预流失、沉睡</span></div><div class="ret-arrow">→</div>
+							<div class="ret-step"><i>🎯</i><b>匹配下一动作</b><span>补货提醒、品类组合、权益或服务关怀</span></div><div class="ret-arrow">→</div>
+							<div class="ret-step"><i>📱</i><b>选择触达渠道</b><span>商城、企微、社群、门店与服务通知</span></div><div class="ret-arrow">→</div>
+							<div class="ret-step"><i>🔁</i><b>结果回流迭代</b><span>下单进入新周期，无响应则降频或换策略</span></div>
+						</div>
+						<div class="ret-kpis"><div><b>30 / 60 日复购率</b>是否回来购买</div><div><b>人均下单频次</b>购买次数变化</div><div><b>召回后复购率</b>是否形成持续购买</div><div><b>增量贡献 / 成本</b>策略投入产出</div></div>
+					</div>
+					<div class="ret-rules">
+						<h3>分层运营规则</h3>
+						<ul><li>活跃会员优先推荐互补品类和家庭组合，提高频次与连带。</li><li>预流失会员结合缺货、退款、延迟等体验问题，先服务再促销。</li><li>沉睡会员按历史价值分级召回，限制触达频次和权益预算。</li><li>设置停止规则，避免对长期无响应人群持续投入。</li></ul>
+						<div class="owners"><span>会员运营</span><span>商品运营</span><span>客服</span><span>数据分析</span></div>
+					</div>
+				</div>
+				<div class="ret-example"><b>案例：</b>会员过去 60 日多次购买水果但未购买其他品类，在预计复购窗口前推荐“应季水果＋家庭日用”组合，并提供快递到家或门店自提选择；未响应则降频，成交后重新计算下一次运营窗口。</div>
+			</section>
+			<section class="slide white" data-page="">
+				<div class="top"><span>第五部分 · 能力沉淀</span><span>ROADMAP</span></div>
+				<h2 class="title">分三步从试点闭环走向<span class="accent">规模化会员经营</span></h2>
+				<p class="sub">每一阶段先形成可验收结果，再扩大渠道、人群和策略范围。</p>
+				<div class="roadmap">
+					<div class="phase"><small>0–90 DAYS</small><h3>跑通一条闭环</h3><div class="goal">证明“渠道会员 → 商城首购”可以被稳定测量和改善</div><ul><li>统一会员状态、指标与来源口径</li><li>选择一个渠道、一个区域和一类核心人群试点</li><li>配置曝光位、承接页与首购权益</li><li>打通首购标记、履约预警和结果回流</li></ul><div class="accept"><b>验收：</b>漏斗完整、来源可归因、首购率有改善</div></div>
+					<div class="phase"><small>90–180 DAYS</small><h3>扩展生命周期</h3><div class="goal">从首购扩展到二购、活跃维护和流失召回</div><ul><li>建立生命周期分层和自动标签</li><li>上线二购、复购窗口、预流失旅程</li><li>积分升级为目标行为激励工具</li><li>向推广中心、企微和门店输出机会清单</li></ul><div class="accept"><b>验收：</b>复购与唤醒提升，权益和履约成本可控</div></div>
+					<div class="phase"><small>180–365 DAYS</small><h3>形成稳定体系</h3><div class="goal">将有效策略复制到更多渠道、区域与品类</div><ul><li>建设实验、归因、成本和经营预警</li><li>沉淀策略模板与标准执行流程</li><li>明确中台、渠道、门店和供应链责任</li><li>以会员净贡献持续优化资源投入</li></ul><div class="accept"><b>验收：</b>策略可复制、体系稳定运行、会员贡献持续增长</div></div>
+				</div>
+			</section>
+			<section class="slide system-slide" data-page="">
+				<style>
+					.system-slide {
+						justify-content: flex-start;
+						padding-top: 64px;
+						background: radial-gradient(circle at 91% 5%, #dff3e8 0, transparent 30%), linear-gradient(135deg, #f7f9f4, #edf4ee)
+					}
+
+					.system-slide .title {
+						font-size: clamp(32px, 3.3vw, 49px);
+						margin-bottom: 6px
+					}
+
+					.system-slide .sub {
+						font-size: clamp(13px, 1.12vw, 17px);
+						margin-bottom: 14px
+					}
+
+					.sys-board {
+						height: 505px;
+						background: rgba(255,255,255,.94);
+						border: 1px solid #d6e4da;
+						border-radius: 24px;
+						box-shadow: 0 15px 40px rgba(20,60,48,.08);
+						padding: 16px 18px;
+						display: grid;
+						grid-template-rows: 62px 132px 174px 54px;
+						gap: 11px
+					}
+
+					.sys-practices {
+						display: grid;
+						grid-template-columns: 130px repeat(7,1fr);
+						gap: 8px;
+						background: #eef5e8;
+						border-radius: 15px;
+						padding: 8px
+					}
+
+					.sys-practices b {
+						background: var(--ink);
+						color: white;
+						border-radius: 10px;
+						display: grid;
+						place-items: center;
+						font-size: 13px
+					}
+
+					.sys-practices span {
+						background: rgba(255,255,255,.9);
+						border: 1px solid #d9e8da;
+						border-radius: 10px;
+						display: grid;
+						place-items: center;
+						font-size: 10.5px;
+						font-weight: 800;
+						color: #365a4c
+					}
+
+					.sys-loop {
+						background: linear-gradient(125deg, #164c39, #216649);
+						border-radius: 18px;
+						padding: 13px 17px;
+						display: grid;
+						grid-template-columns: 155px 1fr;
+						align-items: center;
+						gap: 15px;
+						color: white
+					}
+
+					.sys-loop-title strong {
+						display: block;
+						font-size: 19px;
+						color: var(--lime);
+						margin-bottom: 5px
+					}
+
+					.sys-loop-title span {
+						font-size: 10px;
+						line-height: 1.5;
+						color: #c1d9cf
+					}
+
+					.sys-loop-flow {
+						display: grid;
+						grid-template-columns: repeat(11, auto);
+						align-items: center;
+						justify-content: space-between;
+						gap: 7px
+					}
+
+					.sys-node {
+						width: 104px;
+						height: 76px;
+						background: rgba(255,255,255,.1);
+						border: 1px solid rgba(255,255,255,.14);
+						border-radius: 13px;
+						display: flex;
+						flex-direction: column;
+						align-items: center;
+						justify-content: center;
+						text-align: center
+					}
+
+					.sys-node i {
+						font-style: normal;
+						font-size: 18px;
+						margin-bottom: 4px
+					}
+
+					.sys-node b {
+						font-size: 12px
+					}
+
+					.sys-node small {
+						font-size: 8.5px;
+						color: #c8ddd4;
+						margin-top: 3px
+					}
+
+					.sys-arrow {
+						color: var(--lime);
+						font-size: 17px;
+						font-weight: 900
+					}
+
+					.sys-assets {
+						display: grid;
+						grid-template-columns: repeat(4,1fr);
+						gap: 11px
+					}
+
+					.sys-asset {
+						position: relative;
+						border-radius: 16px;
+						padding: 16px 15px 12px;
+						border: 1px solid #dce7df;
+						background: #f8faf7;
+						overflow: hidden
+					}
+
+					.sys-asset:before {
+						content: attr(data-no);
+						position: absolute;
+						right: 10px;
+						top: 7px;
+						font-size: 28px;
+						font-weight: 900;
+						color: rgba(20,60,48,.08)
+					}
+
+					.sys-asset:nth-child(1) { border-top: 4px solid #37a66f }
+					.sys-asset:nth-child(2) { border-top: 4px solid #e49a18 }
+					.sys-asset:nth-child(3) { border-top: 4px solid #5b8fba }
+					.sys-asset:nth-child(4) { border-top: 4px solid #8b70bd }
+
+					.sys-asset h3 {
+						font-size: 16px;
+						margin: 0 0 6px
+					}
+
+					.sys-asset p {
+						font-size: 10px;
+						line-height: 1.55;
+						color: #65786f;
+						margin: 0 0 9px
+					}
+
+					.sys-asset div {
+						display: flex;
+						flex-wrap: wrap;
+						gap: 5px
+					}
+
+					.sys-asset span {
+						background: white;
+						border: 1px solid #dfe8e2;
+						border-radius: 99px;
+						padding: 4px 7px;
+						font-size: 9px;
+						font-weight: 750;
+						color: #345c4c
+					}
+
+					.sys-result {
+						background: #fff3c9;
+						border: 1px solid #efd27b;
+						border-radius: 14px;
+						display: flex;
+						align-items: center;
+						justify-content: center;
+						gap: 19px;
+						font-size: 11px;
+						font-weight: 850;
+						color: #605021
+					}
+
+					.sys-result strong {
+						font-size: 15px;
+						color: var(--ink)
+					}
+
+					.sys-result span {
+						background: rgba(255,255,255,.72);
+						border-radius: 99px;
+						padding: 6px 12px
+					}
+
+					@media(max-width:900px) {
+						.sys-board { height:auto; min-height:720px; grid-template-rows:auto }
+						.sys-practices { grid-template-columns: repeat(3,1fr) }
+						.sys-loop { grid-template-columns:1fr }
+						.sys-loop-flow { grid-template-columns: repeat(3,1fr) }
+						.sys-arrow { display:none }
+						.sys-assets { grid-template-columns:1fr 1fr }
+					}
+
+					@media print {
+						.system-slide { padding-top:.48in }
+						.sys-board { height:5.6in }
+					}
+				</style>
+				<div class="top"><span>第五部分 · 能力沉淀</span><span>OPERATING SYSTEM</span></div>
+				<h2 class="title">最终沉淀一套<span class="accent">成熟、稳定运行</span>的会员运营体系</h2>
+				<p class="sub">将渠道引流、分层标签、首购履约、权益运营和数据分析，从单点项目固化为企业的日常经营能力。</p>
+				<div class="sys-board">
+					<div class="sys-practices"><b>来自前面的实践</b><span>渠道引流</span><span>分层标签</span><span>会员赋能</span><span>首购履约</span><span>复购召回</span><span>积分权益</span><span>数据复盘</span></div>
+					<div class="sys-loop">
+						<div class="sys-loop-title"><strong>会员经营闭环</strong><span>不依赖单次活动，按照统一节奏持续运转</span></div>
+						<div class="sys-loop-flow">
+							<div class="sys-node"><i>🪪</i><b>识别</b><small>统一会员与来源</small></div><div class="sys-arrow">→</div>
+							<div class="sys-node"><i>🔎</i><b>洞察</b><small>分层、标签与机会</small></div><div class="sys-arrow">→</div>
+							<div class="sys-node"><i>🧠</i><b>策略</b><small>人群、商品与权益</small></div><div class="sys-arrow">→</div>
+							<div class="sys-node"><i>⚙️</i><b>执行</b><small>触达、交易与履约</small></div><div class="sys-arrow">→</div>
+							<div class="sys-node"><i>📊</i><b>复盘</b><small>漏斗、归因与成本</small></div><div class="sys-arrow">→</div>
+							<div class="sys-node"><i>🔁</i><b>迭代</b><small>优化并复制策略</small></div>
+						</div>
+					</div>
+					<div class="sys-assets">
+						<div class="sys-asset" data-no="01"><h3>标准沉淀</h3><p>统一语言和判断规则，让不同渠道按照同一套标准经营。</p><div><span>指标口径</span><span>标签体系</span><span>生命周期</span><span>策略模板</span></div></div>
+						<div class="sys-asset" data-no="02"><h3>工具沉淀</h3><p>把人工经验产品化，让策略能够快速配置、自动执行。</p><div><span>人群圈选</span><span>自动旅程</span><span>权益任务</span><span>看板预警</span></div></div>
+						<div class="sys-asset" data-no="03"><h3>机制沉淀</h3><p>建立目标、实验和复盘节奏，让每次投入都有结果反馈。</p><div><span>目标拆解</span><span>实验验证</span><span>效果归因</span><span>复盘迭代</span></div></div>
+						<div class="sys-asset" data-no="04"><h3>组织沉淀</h3><p>明确中台、渠道、门店和供应链职责，保障策略稳定落地。</p><div><span>中台统筹</span><span>渠道协同</span><span>门店执行</span><span>责任到人</span></div></div>
+					</div>
+					<div class="sys-result"><strong>形成常态化会员经营体系</strong><span>可量化</span><span>可执行</span><span>可复用</span><span>可迭代</span><span>稳定运行 · 持续增长</span></div>
+				</div>
+			</section>
+			
+			
+		</main>
+		<script>
+			const s = [...document.querySelectorAll('.slide')];
+			let i = 0;
+
+			function near() {
+				let d = 1e9;
+				s.forEach((x, n) => {
+					const v = Math.abs(x.getBoundingClientRect().top);
+					if (v < d) {
+						d = v;
+						i = n
+					}
+				});
+				progress.style.width = (i + 1) / s.length * 100 + '%'
+			}
+
+			function go(n) {
+				near();
+				i = Math.max(0, Math.min(s.length - 1, i + n));
+				s[i].scrollIntoView({
+					behavior: 'smooth'
+				})
+			}
+			addEventListener('scroll', near, {
+				passive: true
+			});
+			addEventListener('keydown', e => {
+				if (['ArrowDown', 'ArrowRight', 'PageDown', ' '].includes(e.key)) {
+					e.preventDefault();
+					go(1)
+				}
+				if (['ArrowUp', 'ArrowLeft', 'PageUp'].includes(e.key)) {
+					e.preventDefault();
+					go(-1)
+				}
+			});
+			near()
+		</script>
+	</body>
+</html>
