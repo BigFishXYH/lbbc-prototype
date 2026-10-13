@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>萝卜白菜 · 数据埋点分析｜资源位效果分析与用户行为分析</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#f5f1eb;color:#26382f;font-family:'PingFang SC','Microsoft YaHei',sans-serif;line-height:1.55}main{max-width:1080px;margin:28px auto;background:white;border-radius:20px;padding:34px 42px}.brand{color:#e66b25;font-size:13px;font-weight:700;letter-spacing:2px}h1{font-size:30px;margin:8px 0 10px}.goal{color:#637268;font-size:16px;margin:0 0 24px}h2{font-size:17px;margin:22px 0 12px}.flow{display:grid;grid-template-columns:1fr 34px 1fr 34px 1fr;align-items:center;background:#fff8ef;border:1px solid #f2dfc9;border-radius:14px;padding:20px}.step{background:white;border-radius:10px;padding:16px;border-top:4px solid #ef782d;min-height:132px}.step strong{font-size:20px;display:block}.step p{font-size:13px;color:#738075;margin:6px 0}.step b{color:#df6721;font-size:13px}.arrow{text-align:center;font-size:25px;color:#e87931}.path{grid-column:1/-1;text-align:center;color:#8b765e;font-size:12px;padding-top:14px}.lower{display:grid;grid-template-columns:1.15fr 1fr;gap:26px}table{width:100%;border-collapse:collapse;font-size:13px}th{text-align:left;background:#fff0df;color:#955523}td,th{padding:9px 10px;border-bottom:1px solid #eee8df}td:first-child{font-weight:600;white-space:nowrap}.metrics{display:grid;gap:9px}.metric{padding:10px 14px;background:#f6f8f5;border-radius:8px}.metric b{font-size:14px}.metric p{font-size:12px;color:#6c7b70;margin:3px 0 0}.foot{border-top:1px solid #ebe7df;padding-top:14px;margin-top:22px;color:#62746a;font-size:13px}.foot b{color:#dc6825}@media(max-width:700px){main{margin:0;padding:24px;border-radius:0}h1{font-size:24px}.flow,.lower{display:block}.step{min-height:0}.arrow{transform:rotate(90deg)}.path{text-align:left}}@media print{@page{size:A4 landscape;margin:12mm}body{background:white}main{max-width:none;margin:0;padding:0;border-radius:0}.flow,.lower{break-inside:avoid}}
+.lower{display:block}.metrics{grid-template-columns:repeat(4,1fr)}table{font-size:14px}td,th{padding:12px 14px}th:first-child{width:18%}th:nth-child(2){width:42%}th:nth-child(3){width:40%}@media(max-width:700px){.metrics{grid-template-columns:1fr}table{font-size:12px}td,th{padding:9px 6px}td:first-child{white-space:normal}}@media print{td,th{padding:8px 10px}.step{min-height:110px}.metrics{gap:8px}.metric{padding:8px 10px}h2{margin-top:16px}}
+</style></head><body><main>
+<div class="brand">萝卜白菜 · 数据埋点分析</div>
+<h1>资源位效果分析与用户行为分析</h1>
+<p class="goal">目标：判断资源位是否吸引点击，落地页是否有效引导商品浏览与加购。</p>
+<div class="flow">
+<div class="step"><strong>资源位</strong><p>曝光 → 点击</p><b>吸引力 · 点击率</b></div><div class="arrow">→</div>
+<div class="step"><strong>专题 / 落地页</strong><p>页面浏览 → 商品点击 → 商品详情</p><b>引导力 · PV / UV、商品点击率</b></div><div class="arrow">→</div>
+<div class="step"><strong>商品加购</strong><p>加购点击 → 加购成功</p><b>转化力 · 加购率、成功率</b></div>
+</div>
+<div class="lower"><section><h2>埋点清单</h2><table><thead><tr><th>事件</th><th>触发时机</th><th>重点记录</th></tr></thead><tbody>
+<tr><td>资源位曝光</td><td>素材进入可视区>=50%</td><td>页面、资源位、素材</td></tr>
+<tr><td>资源位点击</td><td>用户点击资源位</td><td>资源位、素材、目标页、用户信息、来源</td></tr>
+<tr><td>专题页浏览</td><td>专题页首屏渲染完成</td><td>专题页、访问来源、用户信息、PV、UV</td></tr>
+<tr><td>商品点击</td><td>点击商品单元，准备进入详情</td><td>商品、来源、用户信息</td></tr>
+<tr><td>商品详情浏览</td><td>详情页首屏渲染完成</td><td>商品、访问来源、用户信息、PV、UV</td></tr>
+<tr><td>加购点击</td><td>点击各个位置加购按钮</td><td>商品、用户信息、来源</td></tr>
+<tr><td>加购成功</td><td>确认加购成功</td><td>商品、规格、数量、用户、来源</td></tr>
+</tbody></table></section><section><h2>核心分析指标</h2><div class="metrics">
+<div class="metric"><b>资源位是否吸引人？</b><p>曝光 / 点击 PV、UV · 点击率</p></div>
+<div class="metric"><b>专题页能否引导商品浏览？</b><p>专题页 PV、UV · 商品点击率 · 详情浏览人数</p></div>
+<div class="metric"><b>哪些位置更容易促成加购？</b><p>各页面 / 模块加购点击人数 · 加购成功率</p></div>
+<div class="metric"><b>哪些资源位带来有效转化？</b><p>资源位引导的加购人数 · 点击后加购率</p></div>
+</div></section></div>
+</main></body></html>
