@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>RFM用户分层运营实操落地版</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%2317233B'/%3E%3Ctext x='16' y='22' font-size='16' text-anchor='middle' fill='%23fff' font-family='Arial'%3ER%3C/text%3E%3C/svg%3E">
+<style>
+  :root{
+    --ink:#17233B; --ink-2:#2A3A55; --ink-3:#5A6B85;
+    --paper:#F4F6FA; --card:#FFFFFF;
+    --line:#E2E8F0;
+    --coral:#E4573D; --coral-soft:#FDEBE7;
+    --teal:#1B7F8C; --teal-soft:#E3F2F4;
+    --violet:#6C5CE7; --violet-soft:#EEECFC;
+    --amber:#D9A441; --amber-soft:#FBF2DF;
+    --green:#3E9B6D; --green-soft:#E7F4EE;
+    --blue:#2F6FED; --blue-soft:#E7EEFD;
+    --hero-grad:linear-gradient(135deg,#101A2E 0%,#1B2B48 55%,#24395F 100%);
+    --shadow:0 1px 2px rgba(20,30,55,.06),0 8px 24px rgba(20,30,55,.06);
+    --r-lg:18px; --r-md:12px; --r-sm:8px;
+    --maxw:1120px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;color:var(--ink);background:var(--paper);line-height:1.7;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+
+  .topnav{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.86);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+  .topnav .wrap{display:flex;align-items:center;gap:22px;height:58px}
+  .brand{display:flex;align-items:center;gap:10px;font-weight:700}
+  .brand .logo{width:30px;height:30px;border-radius:8px;background:var(--hero-grad);color:#fff;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:800}
+  .brand .v{font-size:11px;background:var(--coral);color:#fff;padding:2px 8px;border-radius:20px;font-weight:700}
+  .navlinks{display:flex;gap:4px;margin-left:auto;flex-wrap:wrap}
+  .navlinks a{color:var(--ink-2);text-decoration:none;font-size:13.5px;padding:6px 12px;border-radius:20px;transition:.18s}
+  .navlinks a:hover{background:var(--teal-soft);color:var(--teal)}
+  @media(max-width:760px){.navlinks{display:none}}
+
+  .hero{background:var(--hero-grad);color:#fff;padding:72px 0 92px;position:relative;overflow:hidden}
+  .hero::before{content:"";position:absolute;inset:0;background:
+    radial-gradient(620px 340px at 90% -10%,rgba(108,92,231,.3),transparent 60%),
+    radial-gradient(560px 320px at 6% 120%,rgba(27,127,140,.22),transparent 60%)}
+  .hero .wrap{position:relative}
+  .hero .eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:13px;letter-spacing:1px;color:#AEB9CC;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);padding:6px 14px;border-radius:30px}
+  .hero h1{font-size:44px;line-height:1.16;font-weight:800;letter-spacing:.5px;margin:22px 0 16px}
+  .hero h1 .accent{color:#FF8A6A}
+  .hero .sub{max-width:680px;font-size:17px;color:#C6CFDD;line-height:1.8}
+  .hero .kpoint{margin-top:30px;display:flex;gap:14px;align-items:flex-start;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);border-radius:14px;padding:18px 22px;max-width:680px}
+  .hero .kpoint .q{font-size:30px;flex:none}
+  .hero .kpoint p{font-size:15px;color:#DCE4EF}
+  .hero .kpoint p b{color:#fff}
+  .rfm-strip{display:flex;gap:14px;margin-top:32px;flex-wrap:wrap}
+  .rfm-item{flex:1;min-width:200px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:var(--r-md);padding:18px 20px}
+  .rfm-item .ch{font-size:25px;font-weight:800;display:flex;align-items:center;gap:10px}
+  .rfm-item .ch i{width:12px;height:12px;border-radius:3px;display:inline-block}
+  .rfm-item .en{font-size:13px;color:#9FB0C6;letter-spacing:.5px;margin:4px 0 6px}
+  .rfm-item .d{font-size:14px;color:#D6DEE9}
+  @media(max-width:720px){.hero{padding:52px 0 68px}.hero h1{font-size:30px}}
+
+  section{padding:64px 0}
+  .sec-head{display:flex;align-items:baseline;gap:16px;margin-bottom:10px}
+  .sec-num{font-size:15px;font-weight:800;color:var(--coral);letter-spacing:.5px}
+  .sec-title{font-size:29px;font-weight:800;letter-spacing:.3px}
+  .sec-desc{color:var(--ink-3);margin:6px 0 30px;max-width:780px;font-size:15px}
+
+  .grid{display:grid;gap:18px}
+  .g2{grid-template-columns:repeat(2,1fr)}
+  .g3{grid-template-columns:repeat(3,1fr)}
+  .g4{grid-template-columns:repeat(4,1fr)}
+  @media(max-width:760px){.g2,.g3,.g4{grid-template-columns:1fr}}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--r-lg);padding:24px;box-shadow:var(--shadow)}
+  .card h3{font-size:17px;font-weight:700;margin-bottom:10px;display:flex;align-items:center;gap:9px}
+  .card p{font-size:14px;color:var(--ink-3)}
+  .kicker{font-size:12px;letter-spacing:1.5px;color:var(--ink-3);font-weight:700}
+  .tag{font-size:12px;font-weight:700;padding:3px 10px;border-radius:20px;display:inline-block}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:var(--r-lg);box-shadow:var(--shadow)}
+
+  /* 第一章 后果 */
+  .pain .pi{display:flex;gap:14px;align-items:flex-start}
+  .pain .ico{width:42px;height:42px;border-radius:11px;flex:none;display:flex;align-items:center;justify-content:center}
+  .pain .ico svg{width:22px;height:22px}
+  .pain h3{font-size:16px}
+  .pain .p{font-size:14px;color:var(--ink-3);margin-top:6px}
+  .essence{display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+
+  /* 第二章 阈值 */
+  .dim{display:flex;gap:14px;padding:16px 0;border-bottom:1px dashed var(--line);align-items:flex-start}
+  .dim:last-child{border-bottom:none}
+  .dim .dc{width:46px;height:46px;border-radius:12px;flex:none;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:19px;color:#fff}
+  .dim h4{font-size:16px;font-weight:700;display:flex;align-items:center;gap:8px}
+  .dim .q{font-size:12px;color:#fff;padding:1px 8px;border-radius:20px;font-weight:600}
+  .dim p{font-size:13.5px;color:var(--ink-3);margin-top:4px}
+  .thr{display:flex;flex-direction:column;gap:12px}
+  .thr-row{display:flex;gap:12px;align-items:center;background:var(--paper);border-radius:10px;padding:12px 16px}
+  .thr-row .tl{width:120px;flex:none;font-weight:700;font-size:14px;display:flex;align-items:center;gap:8px}
+  .thr-row .tbar{flex:1;display:flex;align-items:center;gap:8px}
+  .thr-row .seg{flex:1;text-align:center;font-size:12px;padding:7px 4px;border-radius:8px;font-weight:600}
+  .thr-row .seg.hi{background:var(--teal-soft);color:var(--teal)}
+  .thr-row .seg.lo{background:#E9EDF4;color:var(--ink-3)}
+  .thr-row .seg.mid{background:#F2F4F9;color:var(--ink-3);border:1px dashed var(--line)}
+
+  /* 第三章 四步 */
+  .pipe{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin:26px 0 6px}
+  @media(max-width:860px){.pipe{grid-template-columns:1fr;gap:14px}}
+  .pipe .step{position:relative;padding:0 16px}
+  .pipe .step:not(:last-child)::after{content:"";position:absolute;top:22px;right:-6px;width:12px;height:2px;background:var(--line)}
+  @media(max-width:860px){.pipe .step:not(:last-child)::after{display:none}}
+  .pipe .snum{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:17px;color:#fff;margin-bottom:12px}
+  .pipe h4{font-size:15.5px;font-weight:700;margin-bottom:6px}
+  .pipe p{font-size:13px;color:var(--ink-3)}
+
+  /* 第四章 八宫格 */
+  .matrix-wrap{display:grid;grid-template-columns:1.12fr .88fr;gap:26px;align-items:start}
+  @media(max-width:900px){.matrix-wrap{grid-template-columns:1fr}}
+  .matrix{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+  .cell{border:1.5px solid var(--line);border-radius:12px;padding:12px;min-height:122px;cursor:pointer;background:#fff;transition:.15s;display:flex;flex-direction:column;gap:6px}
+  .cell:hover{transform:translateY(-2px);box-shadow:var(--shadow)}
+  .cell.active{box-shadow:0 0 0 2px var(--ink);transform:translateY(-2px)}
+  .cell .nm{font-size:13.5px;font-weight:800;line-height:1.3}
+  .cell .cmb{display:flex;gap:5px;margin-top:auto}
+  .cell .cmb span{width:18px;height:18px;border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;color:#fff}
+  .cell .cmb span.off{background:#fff;border:1.5px solid var(--line);color:var(--ink-3)}
+  .cell .rhythm{font-size:11px;color:var(--ink-3);line-height:1.35}
+  .cell.coral{background:var(--coral-soft);border-color:#F2C7BC}
+  .cell.teal{background:var(--teal-soft);border-color:#BFDDE2}
+  .cell.violet{background:var(--violet-soft);border-color:#D3CFF5}
+  .cell.amber{background:var(--amber-soft);border-color:#ECD9A8}
+  .cell.blue{background:var(--blue-soft);border-color:#C7D7FB}
+  .detail{position:sticky;top:76px;border:1px solid var(--line);border-radius:var(--r-lg);background:#fff;box-shadow:var(--shadow);padding:24px;min-height:360px}
+  .detail .d-name{font-size:21px;font-weight:800;display:flex;align-items:center;gap:10px;margin-bottom:4px}
+  .detail .d-tag{font-size:12px;font-weight:700;padding:3px 10px;border-radius:20px;color:#fff}
+  .detail .d-ratio{font-size:14px;color:var(--ink-3);margin-bottom:14px}
+  .detail h5{font-size:13px;letter-spacing:1px;color:var(--ink-3);margin:15px 0 8px;font-weight:700}
+  .detail .d-portrait{background:var(--paper);border-radius:10px;padding:12px 14px;font-size:14px;color:var(--ink-2)}
+  .detail .strat{display:flex;gap:8px;flex-wrap:wrap}
+  .detail .strat .s{background:var(--paper);border:1px solid var(--line);border-radius:9px;padding:7px 10px;font-size:12.5px;color:var(--ink-2);font-weight:600}
+  .detail .d-ch{font-size:13px;color:var(--ink-3);margin-top:8px}
+  @media(max-width:560px){.matrix{grid-template-columns:repeat(2,1fr)}.detail{position:static}}
+
+  /* 第五章 样例 */
+  .sample-cols{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:6px 0 18px}
+  @media(max-width:760px){.sample-cols{grid-template-columns:1fr 1fr}}
+  .sc{background:var(--paper);border-radius:12px;padding:14px}
+  .sc .n{font-size:22px;font-weight:800}
+  .sc .l{font-size:12px;color:var(--ink-3);margin:2px 0 8px}
+  .sc .a{font-size:12.5px;color:var(--ink-2);font-weight:600;background:#fff;border:1px solid var(--line);border-radius:8px;padding:6px 9px;display:block;line-height:1.5}
+  .watch{display:flex;gap:14px;flex-wrap:wrap;background:var(--green-soft);border:1px solid #BEE0CC;border-radius:12px;padding:16px 18px}
+  .watch .w{flex:1;min-width:170px}
+  .watch .wt{font-size:13px;color:var(--ink-3);font-weight:600}
+  .watch .wn{font-size:16px;font-weight:800;color:var(--green);margin-top:3px}
+
+  /* 第六/七章 避坑 进阶 FAQ */
+  .pit{display:flex;gap:14px;align-items:flex-start;background:#fff;border:1px solid var(--line);border-left:4px solid var(--coral);border-radius:var(--r-md);padding:15px 18px}
+  .pit h4{font-size:15px;font-weight:700;margin-bottom:4px}
+  .pit p{font-size:13.5px;color:var(--ink-3)}
+  .pit .warn{width:26px;height:26px;border-radius:8px;background:var(--coral-soft);color:var(--coral);display:flex;align-items:center;justify-content:center;flex:none;font-weight:800;font-size:14px}
+  .adv{display:flex;gap:14px;align-items:flex-start;background:#fff;border:1px solid var(--line);border-left:4px solid var(--teal);border-radius:var(--r-md);padding:15px 18px}
+  .adv .star{width:26px;height:26px;border-radius:8px;background:var(--teal-soft);color:var(--teal);display:flex;align-items:center;justify-content:center;flex:none;font-weight:800}
+  .adv h4{font-size:15px;font-weight:700;margin-bottom:4px}
+  .adv p{font-size:13.5px;color:var(--ink-3)}
+  .faq{background:#fff;border:1px solid var(--line);border-radius:var(--r-md);padding:18px 20px}
+  .faq .q{font-weight:700;font-size:15px;margin-bottom:6px;display:flex;gap:10px;align-items:baseline}
+  .faq .q::before{content:"Q";font-weight:800;color:var(--coral);font-size:13px;flex:none}
+  .faq .a{font-size:13.5px;color:var(--ink-3)}
+  .faq .a::before{content:"A";font-weight:800;color:var(--teal);margin-right:8px}
+  .faq .a b{color:var(--ink-2)}
+  .faq:last-child{margin-bottom:0}
+
+  .cta{background:var(--hero-grad);color:#fff;border-radius:var(--r-lg);padding:44px;position:relative;overflow:hidden}
+  .cta::before{content:"";position:absolute;inset:0;background:radial-gradient(500px 260px at 92% -20%,rgba(108,92,231,.35),transparent 60%)}
+  .cta h2{font-size:28px;font-weight:800;margin-bottom:20px;position:relative}
+  .cta ol{margin-left:20px;display:grid;gap:10px;position:relative}
+  .cta li{font-size:15px;color:#D6DEE9}
+  .cta li b{color:#fff}
+  .cta .foot{position:relative;margin-top:26px;font-size:13px;color:#9FB0C6}
+  .cta .src{position:relative;margin-top:14px;font-size:12px;color:#7F91AB}
+
+  .chart-box{border:1px solid var(--line);border-radius:var(--r-lg);background:#fff;box-shadow:var(--shadow);padding:8px}
+  #shareChart,#sampleChart{width:100%;height:300px}
+  .table-wrap{overflow-x:auto}
+  .footnote{font-size:12px;color:var(--ink-3);margin-top:10px}
+  .legend-note{font-size:12.5px;color:var(--ink-3);display:flex;gap:16px;flex-wrap:wrap;margin-top:12px}
+  .legend-note b{font-weight:600}
+  footer{padding:34px 0 60px;text-align:center;color:var(--ink-3);font-size:13px}
+</style>
+</head>
+<body>
+
+<!-- ===== 顶部导航 ===== -->
+<nav class="topnav">
+  <div class="wrap">
+    <div class="brand"><span class="logo">R</span>RFM 用户分层运营</div>
+    <div class="navlinks">
+      <a href="#why">为什么必须分层</a>
+      <a href="#model">RFM 是什么</a>
+      <a href="#steps">四步落地</a>
+      <a href="#matrix">八类客户</a>
+      <a href="#sample">落地样例</a>
+      <a href="#summary">四个心法</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ===== Hero ===== -->
+<header class="hero">
+  <div class="wrap">
+    <span class="eyebrow">私域用户运营 · 精细化分层方法</span>
+    <h1>RFM 用户分层运营<br><span class="accent">把"分个类"</span>落到"日常动作"</h1>
+    <p class="sub">RFM 是私域运营里成熟、易上手的分层方法：不靠复杂系统、一张表格就能启动，让对的人收到对的消息、享受对的权益。</p>
+    <div class="kpoint">
+      <div class="q">“</div>
+      <p>私域运营最容易被忽视的一步，是<b>把所有客户当同一群人对待</b>。群发同一条活动、推同一张券，结果要么打扰了不需要的人，要么漏掉了最该重点服务的人。</p>
+    </div>
+    <div class="rfm-strip">
+      <div class="rfm-item"><div class="ch" style="color:#5CC8D6"><i style="background:#1B7F8C"></i>R</div><div class="en">RECENCY · 最近一次消费</div><div class="d">客户多久没下单了，越近分越高，说明还"热"</div></div>
+      <div class="rfm-item"><div class="ch" style="color:#FF8A6A"><i style="background:#E4573D"></i>F</div><div class="en">FREQUENCY · 消费频率</div><div class="d">一段时间内下了几单，越多说明黏性越强</div></div>
+      <div class="rfm-item"><div class="ch" style="color:#A99EFF"><i style="background:#6C5CE7"></i>M</div><div class="en">MONETARY · 累计金额</div><div class="d">花了多少钱，越多说明价值越高</div></div>
+    </div>
+  </div>
+</header>
+
+<!-- ===== 第一章 为什么必须分层 ===== -->
+<section id="why">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">01</span><h2 class="sec-title">为什么私域必须做分层</h2></div>
+    <p class="sec-desc">不做分层，看似"对每个人都公平"，实际代价是转化、打扰、资源三头都吃亏。</p>
+    <div class="grid g3 pain">
+      <div class="card">
+        <div class="pi">
+          <div class="ico" style="background:var(--coral-soft);color:var(--coral)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 8l8-5 8 5v12H4z"/><path d="M9 21V12h6v9"/></svg>
+          </div>
+          <div><h3>转化低</h3><p class="p">给刚下单的新客推"召回券"，他根本不需要；给半年没来的老客推"新品上新"，他早就没印象了。</p></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="pi">
+          <div class="ico" style="background:var(--amber-soft);color:var(--amber)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3l10 18H2z"/><path d="M12 10v5M12 18h.01"/></svg>
+          </div>
+          <div><h3>打扰高</h3><p class="p">一刀切群发，沉默客户被烦到屏蔽你，反而加速流失。</p></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="pi">
+          <div class="ico" style="background:var(--violet-soft);color:var(--violet)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3"/><path d="M12 3v6M12 15v6"/></svg>
+          </div>
+          <div><h3>资源浪费</h3><p class="p">客服和运营的时间有限，平均用力等于没用力，投入产出失衡。</p></div>
+        </div>
+      </div>
+    </div>
+    <div class="panel" style="margin-top:26px;padding:24px 28px;background:linear-gradient(90deg,#fff,var(--teal-soft))">
+      <div class="essence">
+        <span class="kicker" style="flex:none">分层本质</span>
+        <p style="font-size:15px;flex:1;color:var(--ink-2)"><b style="font-size:16px">分层的目的是"让对的人收到对的消息、享受对的权益"</b>，而不是"分个类好看"。分层是手段，动作才是目的。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 第二章 RFM 是什么 ===== -->
+<section id="model" style="background:#fff;border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">02</span><h2 class="sec-title">RFM 是什么？</h2></div>
+    <p class="sec-desc">用三个维度给客户打分，再按"高 / 低"拼出不同的客户类型。比如"R 高 F 高 M 高"是核心铁粉，"R 低 F 低 M 低"是沉睡客户。</p>
+
+    <div class="grid g2" style="margin-top:8px">
+      <div class="panel" style="padding:24px">
+        <div style="margin-bottom:8px"><span class="kicker">三个维度</span></div>
+        <div class="dim">
+          <div class="dc" style="background:var(--teal)">R</div>
+          <div><h4>最近一次消费 <span class="q" style="background:var(--teal)">活跃度</span></h4>
+            <p>多久没下单了，间隔越短越"热"，越容易被再次转化。</p></div>
+        </div>
+        <div class="dim">
+          <div class="dc" style="background:var(--coral)">F</div>
+          <div><h4>消费频率 <span class="q" style="background:var(--coral)">黏性</span></h4>
+            <p>一段时间内下单次数，次数越多越依赖你的产品。</p></div>
+        </div>
+        <div class="dim">
+          <div class="dc" style="background:var(--violet)">M</div>
+          <div><h4>累计金额 <span class="q" style="background:var(--violet)">价值</span></h4>
+            <p>花了多少钱，越多越值得重点维护。</p></div>
+        </div>
+      </div>
+
+      <div class="panel" style="padding:24px">
+        <div style="margin-bottom:12px"><span class="kicker">打分标准</span></div>
+        <div class="table-wrap"><table style="width:100%;border-collapse:collapse;font-size:13px">
+          <colgroup><col style="width:26%"><col style="width:14.8%"><col style="width:14.8%"><col style="width:14.8%"><col style="width:14.8%"><col style="width:14.8%"></colgroup>
+          <tr style="background:var(--ink);color:#fff"><th style="padding:9px 10px;text-align:left;font-size:12.5px;border-radius:10px 0 0 0">维度</th><th style="padding:9px 10px;text-align:center">1 分</th><th style="padding:9px 10px;text-align:center">2 分</th><th style="padding:9px 10px;text-align:center">3 分</th><th style="padding:9px 10px;text-align:center">4 分</th><th style="padding:9px 10px;text-align:center;border-radius:0 10px 0 0">5 分</th></tr>
+          <tr><td style="padding:9px 10px;border-bottom:1px solid var(--line)"><div style="font-weight:700;display:flex;align-items:center;gap:7px"><span style="width:11px;height:11px;border-radius:3px;background:var(--teal)"></span>R</div><div style="font-size:11.5px;color:var(--ink-3);margin-top:2px">距上次消费</div></td><td style="padding:9px 10px;border-bottom:1px solid var(--line);text-align:center">30–60</td><td style="padding:9px 10px;border-bottom:1px solid var(--line);text-align:center">15–30</td><td style="padding:9px 10px;border-bottom:1px solid var(--line);text-align:center">8–15</td><td style="padding:9px 10px;border-bottom:1px solid var(--line);text-align:center">4–7</td><td style="padding:9px 10px;border-bottom:1px solid var(--line);text-align:center;font-weight:700">3 天内</td></tr>
+          <tr><td style="padding:9px 10px;border-bottom:1px solid var(--line)"><div style="font-weight:700;display:flex;align-items:center;gap:7px"><span style="width:11px;height:11px;border-radius:3px;background:var(--coral)"></span>F</div><div style="font-size:11.5px;color:var(--ink-3);margin-top:2px">30天内消费天数</div></td><td style="padding:9px 10px;border-bottom:1px solid var(--line);text-align:center">1 天</td><td style="padding:9px 10px;border-bottom:1px solid var(--line);text-align:center">2 天</td><td style="padding:9px 10px;border-bottom:1px solid var(--line);text-align:center">3 天</td><td style="padding:9px 10px;border-bottom:1px solid var(--line);text-align:center">4 天</td><td style="padding:9px 10px;border-bottom:1px solid var(--line);text-align:center;font-weight:700">5 天以上</td></tr>
+          <tr><td style="padding:9px 10px"><div style="font-weight:700;display:flex;align-items:center;gap:7px"><span style="width:11px;height:11px;border-radius:3px;background:var(--violet)"></span>M </div><div style="font-size:11.5px;color:var(--ink-3);margin-top:2px">30 天内消费金额</div></td><td style="padding:9px 10px;text-align:center">&lt;10</td><td style="padding:9px 10px;text-align:center">11~50</td><td style="padding:9px 10px;text-align:center">51~100</td><td style="padding:9px 10px;text-align:center">100~200</td><td style="padding:9px 10px;text-align:center;font-weight:700">200 以上</td></tr>
+        </table></div>
+        <div style="margin-top:12px;background:var(--paper);border-radius:10px;padding:12px 14px;font-size:12.5px;color:var(--ink-2)">
+          分数越高代表用户越优质：<b>R 越近越活跃、F 买得越勤、M 花得越多</b>。可将 <b>≥3 分视为"高"、≤2 分视为"低"</b>，拼出八类客户。
+        </div>
+        <div style="margin-top:14px;background:var(--amber-soft);border-radius:10px;padding:13px 15px;font-size:13px;color:var(--ink-2)">
+          <b>数据从哪来？</b> 只需要三类基础数据：客户 ID、每笔订单时间、每笔订单金额。商城后台的"客户—订单"列表都能导出，一张 Excel 就能算。
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 第三章 四步落地 ===== -->
+<section id="steps">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">03</span><h2 class="sec-title">四步把 RFM 落到日常</h2></div>
+    <p class="sec-desc">不用上复杂系统，一张表格就能把 RFM 跑起来：捞数据 → 打分 → 拼分层 → 配动作。</p>
+    <div class="pipe">
+      <div class="step"><div class="snum" style="background:var(--teal)">1</div><h4>把数据捞出来</h4><p>导出客户 ID、每笔订单时间、每笔订单金额三类数据，一张 Excel 即可</p></div>
+      <div class="step"><div class="snum" style="background:var(--coral)">2</div><h4>给每个维度打分</h4><p>按 5 分制给 R / F / M 打分，再把 ≥3 分判为"高"、≤2 分判为"低"</p></div>
+      <div class="step"><div class="snum" style="background:var(--violet)">3</div><h4>拼出八类分层</h4><p>把三个维度的高低组合，映射到八类客户类型</p></div>
+      <div class="step"><div class="snum" style="background:var(--amber)">4</div><h4>给每层配动作</h4><p>每层匹配触达节奏与权益，分层不配动作等于白分</p></div>
+    </div>
+
+    <div class="chart-box" style="margin-top:28px">
+      <div style="padding:10px 14px 0;display:flex;align-items:baseline;justify-content:space-between;flex-wrap:wrap;gap:6px">
+        <div><div style="font-weight:700;font-size:15px">私域客户分层占比（示例）</div><div style="font-size:12px;color:var(--ink-3)">结果呈现，可用于分析分层结构与量级</div></div>
+      </div>
+      <div id="shareChart"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 第四章 八类客户 ===== -->
+<section id="matrix" style="background:#fff;border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">04</span><h2 class="sec-title">八类客户与运营动作</h2></div>
+    <p class="sec-desc">三个维度的"高 / 低"组合成八类客户，每层都有对应的运营含义和动作。点击左侧任一格子，查看这一层的画像、动作与触达节奏。</p>
+
+    <div class="matrix-wrap">
+      <div>
+        <div class="matrix" id="matrixGrid">
+          <div class="cell coral active" data-idx="0"><div class="nm">核心铁粉</div><div class="rhythm">R高·F高·M高<br>专属高频维护</div><div class="cmb"><span style="background:var(--teal)">R</span><span style="background:var(--coral)">F</span><span style="background:var(--violet)">M</span></div></div>
+          <div class="cell teal" data-idx="1"><div class="nm">新锐高潜</div><div class="rhythm">R高·F低·M高<br>首单后黄金期</div><div class="cmb"><span style="background:var(--teal)">R</span><span class="off">F</span><span style="background:var(--violet)">M</span></div></div>
+          <div class="cell amber" data-idx="2"><div class="nm">活跃复购</div><div class="rhythm">R高·F高·M低<br>日常提客单</div><div class="cmb"><span style="background:var(--teal)">R</span><span style="background:var(--coral)">F</span><span class="off">M</span></div></div>
+          <div class="cell blue" data-idx="3"><div class="nm">唤回对象</div><div class="rhythm">R低·F高·M高<br>限时紧急召回</div><div class="cmb"><span class="off">R</span><span style="background:var(--coral)">F</span><span style="background:var(--violet)">M</span></div></div>
+          <div class="cell violet" data-idx="4"><div class="nm">普通会员</div><div class="rhythm">R高·F低·M低<br>内容养熟</div><div class="cmb"><span style="background:var(--teal)">R</span><span class="off">F</span><span class="off">M</span></div></div>
+          <div class="cell neutral" data-idx="5"><div class="nm">低价黏客</div><div class="rhythm">R低·F高·M低<br>积分阶梯激励</div><div class="cmb"><span class="off">R</span><span style="background:var(--coral)">F</span><span class="off">M</span></div></div>
+          <div class="cell neutral" data-idx="6"><div class="nm">偶发客户</div><div class="rhythm">R低·F低·M高<br>重大节点触达</div><div class="cmb"><span class="off">R</span><span class="off">F</span><span style="background:var(--violet)">M</span></div></div>
+          <div class="cell neutral" data-idx="7"><div class="nm">沉睡客户</div><div class="rhythm">R低·F低·M低<br>季度级唤醒</div><div class="cmb"><span class="off">R</span><span class="off">F</span><span class="off">M</span></div></div>
+        </div>
+        <div class="legend-note"><span><b>实心点</b>＝高 &nbsp;<b>空心点</b>＝低</span></div>
+      </div>
+
+      <div class="detail" id="detail">
+        <div class="d-name" id="dName"><span id="dDot" style="width:14px;height:14px;border-radius:4px;background:var(--coral)"></span>核心铁粉 <span class="d-tag" id="dTag" style="background:var(--coral)">最高优先级</span></div>
+        <div class="d-ratio" id="dRatio"></div>
+        <h5>人群画像</h5>
+        <div class="d-portrait" id="dPortrait">又活跃、又常买、又舍得花钱的头部客户，是营收的基本盘，值得最高规格的服务与资源投入。</div>
+        <h5>运营动作</h5>
+        <div class="strat" id="dStrat"><span class="s">专属客服</span><span class="s">新品内测</span><span class="s">生日礼</span></div>
+        <div class="d-ch" id="dChan">触达节奏：私域一对一高频维护，重质不重量</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 第五章 落地样例 ===== -->
+<section id="sample" style="background:#fff;border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">05</span><h2 class="sec-title">萝卜白菜小程序用户分层</h2></div>
+    <p class="sec-desc">直接套用 5 分制标准，对"萝卜白菜"会员打 RFM 分层，得到这份 30 天窗口的真实分布。它的形状很典型：消费盘极小，沉睡与未下单的池子巨大。</p>
+
+    <div class="grid g4" style="margin-bottom:24px">
+      <div class="card" style="text-align:center"><div style="font-size:34px;font-weight:800;color:var(--coral)">8,184</div><div style="font-size:13px;font-weight:600">活跃消费用户 · 0.91%</div><div style="font-size:12px;color:var(--ink-3)">八类人群合计，营收基本盘</div></div>
+      <div class="card" style="text-align:center"><div style="font-size:34px;font-weight:800;color:var(--amber)">159,984</div><div style="font-size:13px;font-weight:600">沉睡客户 · 17.98%</div><div style="font-size:12px;color:var(--ink-3)">曾消费但近期沉默</div></div>
+      <div class="card" style="text-align:center"><div style="font-size:34px;font-weight:800;color:var(--ink-3)">721,847</div><div style="font-size:13px;font-weight:600">未下单会员 · 81.11%</div><div style="font-size:12px;color:var(--ink-3)">不纳入八类，待转化</div></div>
+      <div class="card" style="background:var(--coral-soft);border-color:#F2C7BC"><div style="font-size:14px;font-weight:800;color:var(--coral);margin-bottom:6px">核心洞察</div><div style="font-size:13px;color:var(--ink-2);line-height:1.65">活跃消费不足 1%（约 99% 会员仍未下单或已沉睡）——增长空间依然巨大。</div></div>
+    </div>
+
+    <div class="card" style="margin-bottom:24px">
+      <h3><span class="tag" style="background:var(--coral-soft);color:var(--coral)">双线策略</span> 一稳基本盘，一挖大池</h3>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:22px">
+        <div style="display:flex;gap:14px;align-items:flex-start"><div style="width:44px;height:44px;border-radius:11px;background:var(--coral);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;flex:none">稳</div><div><div style="font-weight:700;font-size:15.5px">保住 8,184 个活跃用户</div><p style="font-size:13px;color:var(--ink-3);margin-top:4px">铁粉 2232 防流失、普通会员 2977 转活跃、活跃复购 1493 提客单——这是营收核心，先稳住再谈增长。</p></div></div>
+        <div style="display:flex;gap:14px;align-items:flex-start"><div style="width:44px;height:44px;border-radius:11px;background:var(--amber);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;flex:none">挖</div><div><div style="font-weight:700;font-size:15.5px">激活 88 万沉睡 + 未下单</div><p style="font-size:13px;color:var(--ink-3);margin-top:4px">沉睡 16 万季度级分波次唤醒，未下单 72 万做首单转化；量级大，用低成本策略、控频次、盯 ROI。</p></div></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3><span class="tag" style="background:var(--violet-soft);color:var(--violet)">动作表</span> 各层真实规模与运营动作</h3>
+      <div class="table-wrap"><table style="width:100%;border-collapse:collapse;font-size:13px">
+        <colgroup><col style="width:22%"><col style="width:13%"><col style="width:11%"><col style="width:54%"></colgroup>
+        <tr style="background:var(--ink);color:#fff"><th style="padding:10px 12px;text-align:left;font-size:12.5px;border-radius:10px 0 0 0">人群</th><th style="padding:10px 12px;text-align:right">用户数</th><th style="padding:10px 12px;text-align:right">占比</th><th style="padding:10px 12px;text-align:left;border-radius:0 10px 0 0">核心动作</th></tr>
+        <tr><td style="padding:9px 12px;border-bottom:1px solid var(--line);font-weight:700">核心铁粉（R高、F高、M高）</td><td style="padding:9px 12px;border-bottom:1px solid var(--line);text-align:right">2,232</td><td style="padding:9px 12px;border-bottom:1px solid var(--line);text-align:right">0.25%</td><td style="padding:9px 12px;border-bottom:1px solid var(--line)">专属 VIP、新品内测、一对一维护，防流失</td></tr>
+        <tr><td style="padding:9px 12px;border-bottom:1px solid var(--line);font-weight:700">普通会员（R高、F低、M低）</td><td style="padding:9px 12px;border-bottom:1px solid var(--line);text-align:right">2,977</td><td style="padding:9px 12px;border-bottom:1px solid var(--line);text-align:right">0.33%</td><td style="padding:9px 12px;border-bottom:1px solid var(--line)">内容养熟、引导升级为活跃复购</td></tr>
+        <tr><td style="padding:9px 12px;border-bottom:1px solid var(--line);font-weight:700">活跃复购（R高、F高、M低）</td><td style="padding:9px 12px;border-bottom:1px solid var(--line);text-align:right">1,493</td><td style="padding:9px 12px;border-bottom:1px solid var(--line);text-align:right">0.17%</td><td style="padding:9px 12px;border-bottom:1px solid var(--line)">满减门槛、凑单引导，提客单</td></tr>
+        <tr><td style="padding:9px 12px;border-bottom:1px solid var(--line);font-weight:700">新锐高潜（R高、F低、M高）</td><td style="padding:9px 12px;border-bottom:1px solid var(--line);text-align:right">990</td><td style="padding:9px 12px;border-bottom:1px solid var(--line);text-align:right">0.11%</td><td style="padding:9px 12px;border-bottom:1px solid var(--line)">首单后 7 天跟进，养黏性</td></tr>
+        <tr><td style="padding:9px 12px;border-bottom:1px solid var(--line);font-weight:700">偶发客户（R低、F低、M高）</td><td style="padding:9px 12px;border-bottom:1px solid var(--line);text-align:right">422</td><td style="padding:9px 12px;border-bottom:1px solid var(--line);text-align:right">0.05%</td><td style="padding:9px 12px;border-bottom:1px solid var(--line)">大促 / 节日精准触达</td></tr>
+        <tr><td style="padding:9px 12px;border-bottom:1px solid var(--line);font-weight:700">唤回对象（R低、F高、M高）</td><td style="padding:9px 12px;border-bottom:1px solid var(--line);text-align:right">44</td><td style="padding:9px 12px;border-bottom:1px solid var(--line);text-align:right">~0</td><td style="padding:9px 12px;border-bottom:1px solid var(--line)">一对一回归礼，先唤回再谈转化</td></tr>
+        <tr><td style="padding:9px 12px;border-bottom:1px solid var(--line);font-weight:700">低价黏客（R低、F高、M低）</td><td style="padding:9px 12px;border-bottom:1px solid var(--line);text-align:right">26</td><td style="padding:9px 12px;border-bottom:1px solid var(--line);text-align:right">~0</td><td style="padding:9px 12px;border-bottom:1px solid var(--line)">积分 / 等级阶梯激励</td></tr>
+        <tr><td style="padding:9px 12px;border-bottom:1px solid var(--line);font-weight:700">沉睡客户（R低、F低、M低）</td><td style="padding:9px 12px;border-bottom:1px solid var(--line);text-align:right;color:var(--amber);font-weight:800">159,984</td><td style="padding:9px 12px;border-bottom:1px solid var(--line);text-align:right">17.98%</td><td style="padding:9px 12px;border-bottom:1px solid var(--line)">分波次季度唤醒，控频次、测转化</td></tr>
+        <tr><td style="padding:9px 12px;font-weight:700">未下单会员（不纳入八类）</td><td style="padding:9px 12px;text-align:right;font-weight:800">721,847</td><td style="padding:9px 12px;text-align:right">81.11%</td><td style="padding:9px 12px">首单转化、拉新激活</td></tr>
+      </table></div>
+      <p class="footnote">数据来源：萝卜白菜会员 RFM 分层查询结果（30 天口径，按 5 分制标准）。</p>
+    </div>
+
+    <div style="margin-top:20px;background:var(--green-soft);border:1px solid #BEE0CC;border-radius:14px;padding:20px 24px;display:flex;gap:20px;flex-wrap:wrap;align-items:center">
+      <div style="font-weight:800;flex:none;color:var(--green)">跑一个月，看这三件事</div>
+      <div class="watch" style="border:none;background:transparent;padding:0;flex:1">
+        <div class="w"><div class="wt">核心铁粉</div><div class="wn">复购是否稳住</div></div>
+        <div class="w"><div class="wt">普通会员</div><div class="wn">升级活跃复购比例</div></div>
+        <div class="w"><div class="wt">沉睡 + 未下单</div><div class="wn">唤醒 / 首单转化率</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 第六章 总结 ===== -->
+<section id="summary" style="background:#fff;border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">06</span><h2 class="sec-title">RFM 分层运营的四个心法</h2></div>
+    <p class="sec-desc"><b style="color:var(--ink)">分层不是"分个类好看"，而是让每一份运营投入，都花在值得花的人身上。</b></p>
+
+    <div class="grid g4">
+      <div class="card" style="border-top:4px solid var(--teal)">
+        <div style="font-size:24px;font-weight:800;color:var(--teal)">01</div>
+        <h3 style="margin:8px 0 6px;font-size:17px">分对人</h3>
+        <p>贴合业务与复购周期设定 5 分法阈值，把用户切准——R 看活跃、F 看黏性、M 看价值。</p>
+      </div>
+      <div class="card" style="border-top:4px solid var(--coral)">
+        <div style="font-size:24px;font-weight:800;color:var(--coral)">02</div>
+        <h3 style="margin:8px 0 6px;font-size:17px">动对事</h3>
+        <p>每层都配动作：稳住活跃基本盘，激活 沉睡 + 未下单，不平均用力。</p>
+      </div>
+      <div class="card" style="border-top:4px solid var(--amber)">
+        <div style="font-size:24px;font-weight:800;color:var(--amber)">03</div>
+        <h3 style="margin:8px 0 6px;font-size:17px">常重算</h3>
+        <p>分层是动态状态、不是静态标签，月度重算、看层间迁移、验证每类人群的 ROI。</p>
+      </div>
+      <div class="card" style="border-top:4px solid var(--violet)">
+        <div style="font-size:24px;font-weight:800;color:var(--violet)">04</div>
+        <h3 style="margin:8px 0 6px;font-size:17px">先起步</h3>
+        <p>不用复杂系统，一张表格就能跑；先把分层的习惯建起来，再逐步细化。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>RFM 用户分层运营</footer>
+
+<script src="https://fastly.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js"></script>
+<script>
+/* ===== 八类客户数据 ===== */
+const SEGMENTS = [
+  {name:"核心铁粉",color:"#E4573D",tag:"最高优先级",ratio:"",
+   portrait:"又活跃、又常买、又舍得花钱的头部客户，是营收的基本盘，值得最高规格的服务与资源投入。",
+   strat:["专属客服","新品内测","生日礼"],
+   chan:"触达节奏：私域一对一高频维护，重质不重量"},
+  {name:"新锐高潜",color:"#1B7F8C",tag:"黄金期培育",ratio:"",
+   portrait:"刚完成高客单首单，频次还没上来。正处于信任建立的黄金窗口，动作到位就能沉淀成常客。",
+   strat:["首单后 7 天跟进使用体验","推关联搭配","引导二次回购"],
+   chan:"触达节奏：首单后 7 天黄金期，主动跟进不放过"},
+  {name:"活跃复购",color:"#D9A441",tag:"提客单",ratio:"",
+   portrait:"买得勤但客单低，习惯已养成，主要潜力在把单次金额提上去。",
+   strat:["满减门槛设计","凑单引导","组合装推荐","升级权益激励"],
+   chan:"触达节奏：日常多频次，围绕满减与凑单做文章"},
+  {name:"唤回对象",color:"#2F6FED",tag:"流失预警",ratio:"",
+   portrait:"曾经高频高额、价值很高，但近期活跃明显下降，正处流失边缘，挽回的 ROI 最高。",
+   strat:["限时回归礼","专属券","一对一先唤回再谈转化"],
+   chan:"触达节奏：紧急，限时力度要够，先把人拉回来"},
+  {name:"普通会员",color:"#6C5CE7",tag:"新客培育期",ratio:"",
+   portrait:"还比较活跃但频次和金额都低，多为新客或轻量用户，需要内容养熟、建立信任。",
+   strat:["内容种草","干货养熟","别急着硬推"],
+   chan:"触达节奏：轻触达，以内容为主，不做强推销"},
+  {name:"低价黏客",color:"#5A6B85",tag:"阶梯激励",ratio:"",
+   portrait:"频次不低但金额偏低，价格敏感型用户，需要更轻的激励方式驱动。",
+   strat:["积分体系","等级激励","签到玩法","小额度优惠"],
+   chan:"触达节奏：常态激励，用积分和等级做阶梯"},
+  {name:"偶发客户",color:"#5A6B85",tag:"重大节点触达",ratio:"",
+   portrait:"单次金额高但平时冷淡，像大促型或季节性用户，平时别打扰，节点再出手。",
+   strat:["大促 / 节日精准触达","稀缺品推荐","会员日专属"],
+   chan:"触达节奏：重大节点（大促 / 节日）精准触达"},
+  {name:"沉睡客户",color:"#8FA3BE",tag:"最低优先级",ratio:"",
+   portrait:"活跃度、频次、金额全面偏低，多为流失或沉默用户，营销投入回报低。",
+   strat:["季度级唤醒","一次性大促触达","必要时暂停投放"],
+   chan:"触达节奏：低频、低频、低频，季度级唤醒即可"}
+];
+
+const grid=document.getElementById('matrixGrid');
+function renderDetail(i){
+  const s=SEGMENTS[i];
+  document.getElementById('dName').innerHTML='<span style="width:14px;height:14px;border-radius:4px;background:'+s.color+';display:inline-block"></span>'+s.name+' <span class="d-tag" style="background:'+s.color+'">'+s.tag+'</span>';
+  document.getElementById('dRatio').textContent=s.ratio;
+  document.getElementById('dPortrait').textContent=s.portrait;
+  document.getElementById('dStrat').innerHTML=s.strat.map(x=>'<span class="s">'+x+'</span>').join('');
+  document.getElementById('dChan').textContent=s.chan;
+}
+grid.querySelectorAll('.cell').forEach(c=>{
+  c.addEventListener('click',()=>{
+    grid.querySelectorAll('.cell').forEach(x=>x.classList.remove('active'));
+    c.classList.add('active');
+    renderDetail(+c.dataset.idx);
+  });
+});
+
+/* ===== 分层占比横向条形图（示例） ===== */
+(function(){
+  const data=[
+    {n:'核心铁粉',v:5},{n:'新锐高潜',v:9},{n:'活跃复购',v:15},{n:'唤回对象',v:7},
+    {n:'普通会员',v:18},{n:'低价黏客',v:12},{n:'偶发客户',v:10},{n:'沉睡客户',v:24}
+  ];
+  const colors={0:'#E4573D',1:'#1B7F8C',2:'#D9A441',3:'#2F6FED',4:'#6C5CE7',5:'#5A6B85',6:'#8FA3BE',7:'#C3CDDA'};
+  const ch=echarts.init(document.getElementById('shareChart'));
+  ch.setOption({
+    grid:{left:8,right:50,top:8,bottom:8,containLabel:true},
+    tooltip:{trigger:'axis',axisPointer:{type:'shadow'},formatter:p=>{const d=p[0];return d.name+'：'+d.value+'%（示例）';}},
+    xAxis:{type:'value',axisLabel:{formatter:'{value}%'},splitLine:{lineStyle:{color:'#EEF1F6'}}},
+    yAxis:{type:'category',data:data.map(d=>d.n),axisLabel:{fontSize:12,color:'#2A3A55'},axisLine:{show:false},axisTick:{show:false}},
+    series:[{type:'bar',data:data.map((d,i)=>({value:d.v,itemStyle:{color:colors[i],borderRadius:[0,5,5,0]}})),barWidth:'52%',
+      label:{show:true,position:'right',formatter:'{c}%',fontSize:12,color:'#5A6B85',fontWeight:600}}]
+  });
+  window.addEventListener('resize',()=>ch.resize());
+})();
+</script>
+</body>
+</html>
